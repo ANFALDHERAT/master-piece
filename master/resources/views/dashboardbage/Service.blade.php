@@ -41,7 +41,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-                <a href=" {{ url('/Service/create') }}"> <button class="btn btn-primary mb-2">Add New Service
+                <a href=" {{ url('/Service/create') }}"> <button class="btn btn-primary mb-2">Add New Category
                    </button></a>
 
                 </div>
@@ -51,11 +51,9 @@
                         <table class="table all-package table-category" id="editableTable">
                             <thead>
                                 <tr>
-                                    <th>Name_service</th>
-                                    <th>description</th>
-                                    <th>image</th>
-                                    <th>Name_category</th>
-                                    <th>Name_expert</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -65,20 +63,20 @@
                     <tr>
 
                       <td>{{ $item->name }}</td>
-                      <td>{{ $item->description}}</td>
-                      <td>
-                        @if ($item->image1)
-                        <img src="{{ $item->image1 }}" alt="Image" width="100" height="100">
+                      <td>{{ $item->description }}</td>
+                     <td>
+                      @if ($item->image)
+                      <img src="{{ $item->image }}" alt="Image" width="100" height="100">
 
-                        @else
-                        No Image
-                        @endif
-                       </td>
-                       <td>{{ $item->category->name }}</td>
-                       <td>{{ $item->expert->name }}</td>
+                      @else
+                      No Image
+                      @endif
+                     </td>
+                    <td>
 
 
-               <td> <a href="{{ url('/Service/' . $item->id . '/edit') }}"> <button
+
+                <a href="{{ url('/Service/' . $item->id . '/edit') }}"> <button
                     class="btn  btn-sm"> <i class="fa fa-edit" title="Edit" style="font-size:30px;color:green"></i></button></a>
                     <!-- Delete Admin form (you can use a modal for confirmation) -->
                    <form method="POST" action="{{ url('/Service' . '/' . $item->id  ) }}" style="display: inline;">

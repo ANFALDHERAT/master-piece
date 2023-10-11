@@ -95,6 +95,135 @@ body,
   height: 100%;
 }
 
+
+
+
+
+
+.booking-form {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form h3 {
+    margin-top: 0;
+    color: #F8796C;
+    font-size: 24px;
+}
+
+.booking-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-form label {
+
+    margin-bottom: 8px;
+}
+
+.booking-form input[type="date"],
+.booking-form input[type="time"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.booking-form button {
+    background-color: #F8796C;
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.booking-form button:hover {
+    background-color: #e66b5a;
+}
+
+
+
+.expert-card {
+   height: 550px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Increased border radius for a softer look */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 20px; /* Increased margin between expert cards */
+    padding:20px; /* Added padding to create more space inside the card */
+
+}
+
+.expert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.expert-thumb img {
+    width:200px;
+
+
+}
+
+
+.expert h6.title {
+    margin: 10px 0;
+    color: #F8796C;
+    font-size: 20px; /* Increased font size */
+}
+
+.expert-rating {
+    color: #F8796C;
+    margin-bottom: 8px; /* Adjusted margin for rating */
+}
+
+.stars {
+    color: #F8796C;
+    font-size: 18px;
+}
+
+.expert-description {
+    color: #666;
+    margin-bottom: 15px; /* Increased margin for description */
+    font-size: 16px; /* Adjusted font size */
+}
+
+.expert-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center buttons vertically */
+}
+
+.expert-button {
+    background-color: #F8796C;
+    color: #fff;
+    padding: 8px 15px; /* Adjusted padding for buttons */
+    border-radius: 5px; /* Adjusted border radius for buttons */
+    text-decoration: none;
+    transition: background-color 0.3s;
+    flex-grow: 1;
+    text-align: center;
+
+}
+
+.expert-button:last-child {
+    margin-left: 10px; /* Added margin between buttons */
+}
+
+.expert-button:hover {
+    background-color: #e66b5a;
+    color: white;
+}
+
+
 body {
   font-family: "Futura", Arial, Helvetica, sans-serif;
   font-size: 18px;
@@ -9931,7 +10060,7 @@ body.offcanvas-open .sticky-header {
 
 /* Product Tab List */
 .product-tab-list {
-  
+
   margin-bottom: 66px;
 }
 .product-tab-list li {
@@ -9975,7 +10104,7 @@ body.offcanvas-open .sticky-header {
       -ms-flex-pack: center;
           justify-content: center;
   margin-top: 10px;
- 
+
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .product-tab-list li a {

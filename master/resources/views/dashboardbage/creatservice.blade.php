@@ -28,41 +28,22 @@
 <br><br><br><br><br><br><br><br><br>
 <div class="card" style="margin: 20px">
     <div class="card-header">
-        Add new Service
+        Add new Category
     </div>
     <div class="card-body">
       <form action="{{ url('/Service') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <label>Name Service</label><br>
+        <label>Name</label><br>
         <input type="text" name="name" id="name" class="form-control"><br>
-        <span>@error('name'){{$message}} @enderror</span><br><br>
 
+        <span>@error('name'){{$message}} @enderror</span><br><br>
         <label>description</label><br>
         <input type="text" name="description" id="description" class="form-control">
         <span>@error('description'){{$message}} @enderror</span><br><br>
-
-
-        <label for="image">Upload Image:</label>
+        <label for="image">Upload Image :</label>
         <input type="file" id="image" name="image" accept="image/*" ><br>
         <span>@error('image'){{$message}} @enderror</span><br><br>
-
-        <label>Select Category</label><br>
-        <select name="category_id" id="category_id" class="form-control">
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @endforeach
-        </select>
-        <span>@error('category_id'){{ $message }}@enderror</span><br><br>
-
-        <label>Select Beauty Expert</label><br>
-        <select name="expert_id" id="expert_id" class="form-control">
-            @foreach ($experts as $expert)
-                <option value="{{ $expert->id }}">{{ $expert->name }}</option>
-            @endforeach
-        </select>
-        <span>@error('expert_id'){{ $message }}@enderror</span><br><br>
-
         <input type="submit" value="Save" class="btn " style="background-color: #F8796C"><br>
       </form>
 

@@ -131,25 +131,25 @@
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
                             <li>
-                                <a href="javascript:void(0)">
+                                <a href="/profile">
                                     <i data-feather="user"></i>Edit Profile
                                 </a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="javascript:void(0)">
                                     <i data-feather="mail"></i>Inbox
                                 </a>
-                            </li>
-                            <li>
+                            </li> --}}
+                            {{-- <li>
                                 <a href="javascript:void(0)">
                                     <i data-feather="lock"></i>Lock Screen
                                 </a>
-                            </li>
-                            <li>
+                            </li> --}}
+                            {{-- <li>
                                 <a href="javascript:void(0)">
                                     <i data-feather="settings"></i>Settings
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a href="javascript:void(0)">
                                     <i data-feather="log-out"></i>Logout
@@ -186,7 +186,7 @@
                 </div>
                 <ul class="sidebar-menu">
                     <li>
-                        <a class="sidebar-header" href="index.html">
+                        <a class="sidebar-header" href="/dash">
                             <i data-feather="home"></i>
                             <span>Dashboard</span>
                         </a>
@@ -197,13 +197,13 @@
 
 
                     <li>
-                        <a class="sidebar-header" href="index.html">
+                        <a class="sidebar-header" href="/Admin">
                             <i data-feather="home"></i>
                             <span>Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a class="sidebar-header" href="index.html">
+                        <a class="sidebar-header" href="/user">
                             <i data-feather="home"></i>
                             <span>User</span>
                         </a>
@@ -389,7 +389,7 @@
                                 class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="profile.html"><i class="fa fa-circle"></i>Profile
+                                <a href="/profile"><i class="fa fa-circle"></i>Profile
                                 </a>
                             </li>
                         </ul>
@@ -400,17 +400,17 @@
                                 data-feather="archive"></i><span>Invoice</span></a>
                     </li> --}}
 
-                    <li>
+                    {{-- <li>
                         <a class="sidebar-header" href="forgot-password.html">
                             <i data-feather="key"></i>
                             <span>Forgot Password</span>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li>
                         <a class="sidebar-header" href="login.html">
                             <i data-feather="log-in"></i>
-                            <span>Login</span>
+                            <span>Log Out</span>
                         </a>
                     </li>
                 </ul>

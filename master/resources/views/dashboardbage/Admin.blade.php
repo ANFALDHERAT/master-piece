@@ -41,7 +41,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-                <a href=" {{ url('/BeautyExpert/create') }}"> <button class="btn btn-primary mb-2">Add New  Beauty Expert
+                <a href=" {{ url('/Admin/create') }}"> <button class="btn btn-primary mb-2">Add New  Admin
                    </button></a>
 
                 </div>
@@ -53,20 +53,10 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email </th>
+                                    <th>password</th>
                                     <th>address</th>
                                     <th>phone</th>
-                                    <th>password</th>
-                                    <th>availability</th>
-                                    <th>Name service</th>
-                                    <th>service_area</th>
-                                    <th>services_offered</th>
-                                    <th>description</th>
-                                    <th>average_rating </th>
-                                    <th>image1</th>
-                                    <th>image2</th>
-                                    <th>image3</th>
-                                    <th>image4</th>
-                                    <th>image5</th>
+                                    <th>image</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,65 +66,26 @@
 
                       <td>{{ $item->name }}</td>
                       <td>{{ $item->email}}</td>
+                      <td>{{ $item->password}}</td>
                       <td>{{ $item->address}}</td>
                       <td>{{ $item->phone}}</td>
-                      <td>{{ $item->password}}</td>
-
-                      <td>{{ $item->availability}}</td>
-                      <td>{{ $item->service->name }}</td>
-                      <td>{{ $item->service_area}}</td>
-                      <td>{{ $item->services_offered}}</td>
-                      <td>{{ $item->description}}</td>
-                      <td>{{ $item->average_rating }}</td>
-
                      <td>
-                      @if ($item->image1)
-                      <img src="{{ $item->image1 }}" alt="Image" width="100" height="100">
+                      @if ($item->image)
+                      <img src="{{ $item->image }}" alt="Image" width="100" height="100">
 
                       @else
                       No Image
                       @endif
                      </td>
-                     <td>
-                        @if ($item->image2)
-                        <img src="{{ $item->image2 }}" alt="Image" width="100" height="100">
 
-                        @else
-                        No Image
-                        @endif
-                       </td>
-                       <td>
-                        @if ($item->image3)
-                        <img src="{{ $item->image3 }}" alt="Image" width="100" height="100">
-
-                        @else
-                        No Image
-                        @endif
-                       </td>
-                       <td>
-                        @if ($item->image4)
-                        <img src="{{ $item->image4 }}" alt="Image" width="100" height="100">
-
-                        @else
-                        No Image
-                        @endif
-                       </td>
-                       <td>
-                        @if ($item->image5)
-                        <img src="{{ $item->image5}}" alt="Image" width="100" height="100">
-
-                        @else
-                        No Image
-                        @endif
-                       </td>
                     <td>
 
 
 
-                <a href="{{ url('/BeautyExpert/' . $item->id . '/edit') }}"> <button
-                    class="btn  btn-sm"> <i class="fa fa-edit" title="Edit" style="font-size:30px;color:green"></i></button></a>
+                {{-- <a href="{{ url('/Admin/' . $item->id . '/edit') }}"> <button
+                    class="btn  btn-sm"> <i class="fa fa-edit" title="Edit" style="font-size:30px;color:green"></i></button></a> --}}
                     <!-- Delete Admin form (you can use a modal for confirmation) -->
-                   <form method="POST" action="{{ url('/BeautyExpert' . '/' . $item->id  ) }}" style="display: inline;">
+                   <form method="POST" action="{{ url('/Admin' . '/' . $item->id  ) }}" style="display: inline;">
                         @csrf
                         @method('DELETE')
 

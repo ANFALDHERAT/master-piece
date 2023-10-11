@@ -1,5 +1,3 @@
-
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -13,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('checkouts', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('expert_id');
+            $table->time('time');
+            $table->date('date');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->decimal('payment', 10, 2); // Adjust precision and scale as needed
-            $table->text('notes')->nullable();
-            $table->unsignedBigInteger('booking_id');
-            $table->decimal('total_amount', 10, 2); // Adjust precision and scale as needed
-            $table->string('payment_method');
+            $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('serviceprice_id')->nullable();
             $table->timestamps();
 
             $table->foreign('expert_id')->references('id')->on('beauty_experts');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('booking_id')->references('id')->on('bookings');
-
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->foreign('serviceprice_id')->references('id')->on('service_prices');
         });
     }
 
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('checkouts');
+        Schema::dropIfExists('bookings');
     }
 };

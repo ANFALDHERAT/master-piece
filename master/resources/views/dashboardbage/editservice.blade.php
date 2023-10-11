@@ -29,7 +29,7 @@
 
 <div class="card" style="margin: 20px">
     <div class="card-header">
-      Edit Service
+      Edit Category
     </div>
     <div class="card-body">
         <form action="{{ url('Service/' .$data->id) }}" method="POST" enctype="multipart/form-data">
@@ -37,7 +37,7 @@
             @method("PATCH")
             <input type="hidden" name="id" value="{{ $data->id }}" id="id">
             <label>Name</label><br>
-            <input type="text" name="name" value="{{ $data->name}}" id="address" class="form-control"><br>
+            <input type="text" name="name" value="{{ $data->name}}" id="name" class="form-control"><br>
             <span>@error('name'){{$message}} @enderror</span><br><br>
 
             <label>Description</label><br>
@@ -50,29 +50,6 @@
         <!-- Allow uploading a new image -->
             <input type="file" name="image" id="image" accept="image/*" class="form-control"><br>
             <span>@error('image'){{$message}} @enderror</span><br><br>
-
-
-            <label>Select Category</label><br>
-            <select name="category_id" id="category_id" class="form-control">
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ $category->id == $data->category_id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
-            <span>@error('category_id'){{ $message }}@enderror</span><br><br>
-
-            <label>Select Beauty Expert</label><br>
-            <select name="expert_id" id="expert_id" class="form-control">
-                @foreach ($experts as $expert)
-                    <option value="{{ $expert->id }}" {{ $expert->id == $data->expert_id ? 'selected' : '' }}>
-                        {{ $expert->name }}
-                    </option>
-                @endforeach
-            </select>
-            <span>@error('expert_id'){{ $message }}@enderror</span><br><br>
-
-
             <input type="submit" value="Update" class="btn btn-success"><br>
         </form>
     </div>

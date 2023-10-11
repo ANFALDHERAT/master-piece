@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BeautyExpert extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'email',
@@ -25,13 +25,11 @@ class BeautyExpert extends Model
         'image5',
         'expertise',
         'average_rating',
+        'service_id',
     ];
-    public function receivedReviews()
+
+    public function service()
     {
-        return $this->hasMany(Review::class, 'expert_id');
-    }
-    public function services()
-    {
-        return $this->hasMany(Service::class, 'expert_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }

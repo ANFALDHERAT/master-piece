@@ -59,6 +59,14 @@
         <input type="text" name="availability" id="availability" class="form-control">
         <span>@error('availability'){{$message}} @enderror</span><br><br>
 
+        <label>Select Service</label><br>
+        <select name="service_id" id="service_id" class="form-control">
+            @foreach ($services as $service)
+                <option value="{{ $service->id }}">{{ $service->name }}</option>
+            @endforeach
+        </select><br>
+
+
         <label>service_area</label><br>
         <input type="text" name="service_area" id="service_area" class="form-control">
         <span>@error('service_area'){{$message}} @enderror</span><br><br>
@@ -74,7 +82,6 @@
         <label>average_rating</label><br>
         <input type="number" name="average_rating" id="average_rating" class="form-control">
         <span>@error('average_rating'){{$message}} @enderror</span><br><br>
-
 
         <label for="image1">Upload Image 1:</label>
         <input type="file" id="image1" name="image1" accept="image/*" ><br>

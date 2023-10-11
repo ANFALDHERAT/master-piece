@@ -32,7 +32,7 @@
       Edit Beauty Expert
     </div>
     <div class="card-body">
-        <form action="{{ url('Admin/' .$data->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('BeautyExpert/' .$data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method("PATCH")
             <input type="hidden" name="id" value="{{ $data->id }}" id="id">
@@ -44,11 +44,6 @@
             <input type="email" name="email" value="{{ $data->email}}"   id="email" class="form-control"><br>
             <span>@error('email'){{$message}} @enderror</span><br><br>
 
-            <label>password</label><br>
-            <input type="password" name="password" value="{{ $data->password}}"   id="password" class="form-control"><br>
-            <span>@error('password'){{$message}} @enderror</span><br><br>
-
-
             <label>Address</label><br>
             <input type="text" name="address" value="{{ $data->address}}"   id="address" class="form-control"><br>
             <span>@error('address'){{$message}} @enderror</span><br><br>
@@ -57,28 +52,20 @@
             <input type="number" name="phone" value="{{ $data->phone}}"   id="phone" class="form-control"><br>
             <span>@error('phone'){{$message}} @enderror</span><br><br>
 
-
             <label>password</label><br>
             <input type="password" name="password" value="{{ $data->password}}"   id="password" class="form-control"><br>
             <span>@error('password'){{$message}} @enderror</span><br><br>
+
 
             <label>availability</label><br>
             <input type="text" name="availability" value="{{ $data->availability}}"   id="availability" class="form-control"><br>
             <span>@error('availability'){{$message}} @enderror</span><br><br>
 
 
-            <select name="service_id" id="service_id" class="form-control">
-                @foreach ($services as $service)
-                    <option value="{{ $service->id }}" {{ $service->id == $data->service_id ? 'selected' : '' }}>
-                        {{ $service->name }}
-                    </option>
-                @endforeach
-            </select>
-
-
             <label>service_area</label><br>
             <input type="text" name="service_area" value="{{ $data->service_area}}"   id="service_area" class="form-control"><br>
             <span>@error('service_area'){{$message}} @enderror</span><br><br>
+
 
             <label>services_offered</label><br>
             <input type="text" name="services_offered" value="{{ $data->services_offered}}"   id="services_offered" class="form-control"><br>
@@ -89,17 +76,16 @@
             <span>@error('description'){{$message}} @enderror</span><br><br>
 
 
-
             <label>average_rating</label><br>
             <input type="text" name="average_rating" value="{{ $data->average_rating}}"   id="average_rating" class="form-control"><br>
-            <span>@error('average_rating'){{$message}} @enderror</span><br><br>
+            <span>@error('saverage_rating'){{$message}} @enderror</span><br><br>
 
 
             @if ($data->image1)
             <img src="{{ asset('assets/img/' . $data->image1) }}" alt="Existing Image" width="100" height="100"><br>
             @endif
         <!-- Allow uploading a new image -->
-            <input type="file" name="image1" id="image" accept="image/*" class="form-control"><br>
+            <input type="file" name="image1" id="image1" accept="image/*" class="form-control"><br>
             <span>@error('image1'){{$message}} @enderror</span><br><br>
 
             @if ($data->image2)
@@ -108,6 +94,7 @@
         <!-- Allow uploading a new image -->
             <input type="file" name="image2" id="image2" accept="image/*" class="form-control"><br>
             <span>@error('image2'){{$message}} @enderror</span><br><br>
+
 
             @if ($data->image3)
             <img src="{{ asset('assets/img/' . $data->image3) }}" alt="Existing Image" width="100" height="100"><br>
@@ -122,15 +109,12 @@
         <!-- Allow uploading a new image -->
             <input type="file" name="image4" id="image4" accept="image/*" class="form-control"><br>
             <span>@error('image4'){{$message}} @enderror</span><br><br>
-
             @if ($data->image5)
             <img src="{{ asset('assets/img/' . $data->image5) }}" alt="Existing Image" width="100" height="100"><br>
             @endif
         <!-- Allow uploading a new image -->
             <input type="file" name="image5" id="image5" accept="image/*" class="form-control"><br>
             <span>@error('image5'){{$message}} @enderror</span><br><br>
-
-
             <input type="submit" value="Update" class="btn btn-success"><br>
         </form>
     </div>

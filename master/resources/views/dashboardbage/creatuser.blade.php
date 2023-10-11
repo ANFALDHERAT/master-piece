@@ -28,27 +28,51 @@
 <br><br><br><br><br><br><br><br><br>
 <div class="card" style="margin: 20px">
     <div class="card-header">
-        Add new Category
+        Add new Beaty Expert
     </div>
     <div class="card-body">
-      <form action="{{ url('/category') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ url('/user') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <label>Name</label><br>
         <input type="text" name="name" id="name" class="form-control"><br>
 
         <span>@error('name'){{$message}} @enderror</span><br><br>
-        <label>description</label><br>
-        <input type="text" name="description" id="description" class="form-control">
-        <span>@error('description'){{$message}} @enderror</span><br><br>
-        <td>
-            @if ($item->image)
-            <img src="{{ $item->image }}" alt="Image" width="100" height="100">
 
-            @else
-            No Image
-            @endif
-           </td>
+        <label for="image">Upload Image :</label>
+        <input type="file" id="image" name="image" accept="image/*" ><br>
+        <span>@error('image'){{$message}} @enderror</span><br><br>
+
+
+        <label>Email</label><br>
+        <input type="email" name="email" id="email" class="form-control">
+        <span>@error('email'){{$message}} @enderror</span><br><br>
+
+        <label>password</label><br>
+        <input type="text" name="password" id="password" class="form-control">
+        <span>@error('password'){{$message}} @enderror</span><br><br>
+
+        <label>address</label><br>
+        <input type="text" name="address" id="address" class="form-control">
+        <span>@error('address'){{$message}} @enderror</span><br><br>
+
+        <label>phone</label><br>
+        <input type="phone" name="phone" id="phone" class="form-control">
+        <span>@error('phone'){{$message}} @enderror</span><br><br>
+
+
+        <label>city</label><br>
+        <input type="text" name="city" id="city" class="form-control">
+        <span>@error('city'){{$message}} @enderror</span><br><br>
+
+        <label>role</label><br>
+        <input type="text" name="role" id="role" class="form-control">
+        <span>@error('role'){{$message}} @enderror</span><br><br>
+
+
+
+
+
         <input type="submit" value="Save" class="btn " style="background-color: #F8796C"><br>
       </form>
 

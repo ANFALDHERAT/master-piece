@@ -6,5 +6,109 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 class AdminController extends Controller
 {
-  
+    public function index()
+    {
+        $data = Admin::all();
+        return view('dashboardbage.Admin')->with('data', $data);
+    }
+
+    public function create()
+    {
+        return view('dashboardbage.creatadmin');
+    }
+
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+            'address' => 'required',
+            'phone' => 'required|numeric',
+         'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+
+
+        ]);
+
+        $filename = '';
+        if ($request->hasFile('image')) {
+            $filename = $request->getSchemeAndHttpHost() . '/assets/img/' . time() . '.' . $request->image->extension();
+            $request->image->move(public_path('/assets/img/'), $filename);
+        }
+
+        Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'address' => $request->address,
+            'phone' => $request->phone,
+
+
+            'image' => $filename,
+
+        ]);
+
+        return redirect('Admin')->with('success', 'Admin Added!');
+     }
+
+
+    // public function edit($id)
+    // {
+    //     $data = Admin::find($id);
+    //     return view('dashboardbage.editbeauty')->with('data', $data);
+    // }
+
+    // public function update(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'name' => 'required',
+    //         'email' => 'required|email',
+    //         'address' => 'required',
+    //         'phone' => 'required|numeric',
+    //         'availability' => 'required',
+    //         'service_area' => 'required',
+    //         'services_offered' => 'required',
+    //         'description' => 'required',
+    //         'average_rating' => 'required|numeric',
+    //         'image1' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+    //         'image2' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+    //         'image3' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+    //         'image4' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+    //         'image5' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+    //     ]);
+
+    //     $data = [
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'address' => $request->address,
+    //         'phone' => $request->phone,
+    //         'availability' => $request->availability,
+    //         'service_area' => $request->service_area,
+    //         'services_offered' => $request->services_offered,
+    // 'description' => $request->description,
+    //         'average_rating' => $request->average_rating,
+    //     ];
+
+    //     // Check if images are uploaded and update them if needed
+    //     for ($i = 1; $i <= 5; $i++) {
+    //         $imageName = 'image' . $i;
+    //         if ($request->hasFile($imageName)) {
+    //             $imagePath = $request->getSchemeAndHttpHost() . '/assets/img/' . time() . '.' . $request->$imageName->extension();
+    //             $request->$imageName->move(public_path('/assets/img/'), $imagePath);
+    //             $data[$imageName] = $imagePath;
+    //         }
+    //     }
+
+    //     Admin::where(['id' => $id])->update($data);
+
+    //     return redirect('Admin')->with('success', 'Admin Updated!');
+    // }
+
+    public function destroy($id)
+    {
+        Admin::destroy($id);
+        return redirect('Admin')->with('flash_message', 'Admin deleted!');
+    }
 }

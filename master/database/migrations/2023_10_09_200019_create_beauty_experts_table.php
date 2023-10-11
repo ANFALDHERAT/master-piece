@@ -1,16 +1,12 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateBeautyExpertsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('beauty_experts', function (Blueprint $table) {
             $table->id();
@@ -19,7 +15,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('password');
-            $table->boolean('availability')->default(true); // Default availability is true
+            $table->boolean('availability')->default(true);
             $table->string('service_area')->nullable();
             $table->string('services_offered')->nullable();
             $table->text('description')->nullable();
@@ -29,16 +25,16 @@ return new class extends Migration
             $table->mediumText('image4')->nullable();
             $table->mediumText('image5')->nullable();
             $table->string('expertise')->nullable();
-            $table->decimal('average_rating', 5, 2)->nullable(); // Adjust precision and scale as needed
+            $table->decimal('average_rating', 5, 2)->nullable();
+            $table->unsignedBigInteger('service_id');
             $table->timestamps();
+
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('beauty_experts');
     }
-};
+}

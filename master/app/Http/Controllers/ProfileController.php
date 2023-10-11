@@ -1,23 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Admin;
 use Illuminate\Http\Request;
-use App\Models\Category;
-class CategoryController extends Controller
+
+class ProfileController extends Controller
 {
 
 
-   
 
     public function index()
     {
-        $data= Category::all();
-        return view('dashboardbage.category')->with('data', $data);
+        $data= Admin::all();
+        return view('dashboardbage.adminprofile')->with('data', $data);
     }
     public function create()
     {
-        return view('dashboardbage.createcategory');
+        return view('dashboardbage.adminprofile');
     }
 
 
@@ -25,7 +24,10 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+            'address' => 'required',
+            'phone' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
 
 
@@ -37,21 +39,24 @@ class CategoryController extends Controller
             $request->image->move(public_path('/assets/img/'), $filename);
         }
 
-        Category::create([
+        Admin::create([
             'name' => $request->name,
-            'description' => $request->description,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'address' => $request->address,
+            'phone' => $request->phone,
             'image' => $filename,
         ]);
 
-        return redirect('category')->with('success', 'Category Added!');
+        return redirect('profile')->with('success', 'profile Added!');
      }
 
 
 
     public function edit($id)
     {
-        $data=Category::find($id);
-        return view('dashboardbage.editcategory')->with('data',$data);
+        $data = Admin::findOrFail($id);
+        return view('dashboardbage.adminprofile')->with('data',$data);
     }
 
 
@@ -59,7 +64,10 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $data['name'] = $request->name;
-        $data['description'] = $request->description;
+        $data['email'] = $request->email;
+        $data['password'] = bcrypt($request->password);
+        $data['address'] = $request->address;
+        $data['phone'] = $request->phone;
 
         $filename = '';
 
@@ -72,16 +80,18 @@ class CategoryController extends Controller
         }
 
 
-        Category::where(['id' => $id])->update($data);
-        return redirect('category')->with('success', 'Category Updated!');
+        Admin::where(['id' => $id])->update($data);
+        return redirect('profile')->with('success', 'profile Updated!');
 
     }
 
     public function destroy($id)
     {
 
-    Category::destroy($id);
-    return redirect('category')->with('flash_message','Category deleted!');
+        Admin::destroy($id);
+    return redirect('profile')->with('flash_message','profile deleted!');
 
     }
+
+
 }
