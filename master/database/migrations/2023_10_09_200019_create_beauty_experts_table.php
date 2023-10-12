@@ -15,6 +15,7 @@ class CreateBeautyExpertsTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('password');
+            $table->string('working_hours');
             $table->boolean('availability')->default(true);
             $table->string('service_area')->nullable();
             $table->string('services_offered')->nullable();

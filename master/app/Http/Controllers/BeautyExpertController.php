@@ -20,15 +20,15 @@ class BeautyExpertController extends Controller
 
         // Use $service_id to filter experts from the database based on the selected service
         $experts = BeautyExpert::where('service_id', $id)->get();
-
-        return view('home.shop', compact('experts'));
+        $services =Service::all();
+        return view('home.shop', compact('experts','services'));
     }
     public function product($id)
-    {
-        $experts = BeautyExpert::where('service_id', $id)->get();
-
-        return view('home.product-details-sticky', compact('experts'));
-    }
+{
+    $expert = BeautyExpert::find($id);
+    $services =Service::all();
+    return view('home.product-details-sticky', compact('expert','services'));
+}
 
     public function index()
     {

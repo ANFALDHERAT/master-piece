@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ServicePrice extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','service_id', 'type', 'price'];
+    protected $fillable = ['id','service_id', 'type', 'price','time',
+    'date',];
     public function service()
     {
         return $this->belongsTo(Service::class);

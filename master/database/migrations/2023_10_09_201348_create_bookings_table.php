@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('expert_id');
-            $table->time('time');
-            $table->date('date');
-            $table->text('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('serviceprice_id')->nullable();

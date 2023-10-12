@@ -113,7 +113,8 @@
                         </span> -->
 
 
-                            <img src="assets1/images/ma6.jfif" alt="" style="height:400px;width: 400px;">
+
+                            <img src="{{ $expert->image1 }}" alt="Expert Image" style="height:400px;width: 400px;">
                 </div>
 
 
@@ -127,11 +128,14 @@
                 <div class="col-lg-4 col-6 learts-mb-40">
 
                                     <div class="sticky-sidebar-inner">
-                                        <h3 class="product-title">Hadeel Yousf</h3>
+                                        <h3 class="product-title">{{  $expert->name}}</h3>
                                         <div class="product-ratings"  style="color: #F8796C;">
-                                            <span class="star-rating" style="color: #F8796C;">
-                                                <span class="rating-active" style="width: 100%;">ratings</span>
+                                            <span class="stars">
+                                                @for ($i = 1; $i <= $expert->average_rating; $i++)
+                                                    &#9733;
+                                                @endfor
                                             </span>
+
                                             <!-- <a href="#reviews" class="review-link">(<span class="count">2</span> customer reviews)</a> -->
                                         </div>
 
@@ -144,11 +148,11 @@
                                             <main class="expert-profile">
                                                 <div class="expert-details">
 
-                                                    <p>Manicure and Pedicure Specialist</p>
-                                                    <p>Experience: 5+ years</p>
+                                                    <p>{{ $expert->service->name }} Specialist</p>
+                                                    <p>Experience: {{  $expert->expertise}} years</p>
 
-                                                    <p>Available Days: Monday - Saturday</p>
-                                                    <p>Working Hours: 10:00 AM - 6:00 PM</p>
+                                                    <p>Available Days: {{  $expert->availability}}</p>
+                                                    <p>Working Hours: {{  $expert->working_hours}}</p>
 
                                                     <!-- <p >price: 10 jd</p> -->
 
@@ -162,6 +166,7 @@
 
                                     </div>
                 </div>
+
                 <div class="col-lg-5 col-6 learts-mb-40" >
                     <div class="booking-form">
                         <h3>Book an Appointment</h3>
@@ -424,8 +429,11 @@
                                 <!-- <span class="product-badges">
                                     <span class="onsale">-13%</span>
                                 </span> -->
-                                <img src="assets1/images/d2.jfif" alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src="assets1/images/d2.jfif" alt="Product Image" style="height: 370px;">
+                                <img src={{ asset('assets1/images/d2.jfif')}} alt="Product Image" style="height: 370px;">
+
+
+
+                                <img class="image-hover " src={{ asset('assets1/images/d2.jfif') }} alt="Product Image" style="height: 370px;">
                             </a>
                             <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
                         </div>
@@ -449,8 +457,8 @@
                     <div class="product">
                         <div class="product-thumb">
                             <a href="product-details.html" class="image">
-                                <img src="assets1/images/d3.jfif" alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src="assets1/images/d3.jfif" alt="Product Image" style="height: 370px;">
+                                <img src= {{ asset('assets1/images/d3.jfif')}} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= {{ asset('assets1/images/d3.jfif')}} alt="Product Image" style="height: 370px;">
                             </a>
                             <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
                         </div>
@@ -475,8 +483,8 @@
                                 <span class="hot">hot</span>
                             </span> -->
                             <a href="product-details.html" class="image">
-                                <img src="assets1/images/d4.jfif" alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src="assets1/images/d4.jfif" alt="Product Image" style="height: 370px;">
+                                <img src= {{ asset('assets1/images/d4.jfif')}} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= {{ asset('assets1/images/d4.jfif')}} alt="Product Image" style="height: 370px;">
                             </a>
                             <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
                         </div>
@@ -502,8 +510,8 @@
                                 <!-- <span class="product-badges">
                                     <span class="onsale">-27%</span>
                                 </span> -->
-                                <img src="assets1/images/d5.jfif" alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src="assets1/images/d5.jfif" alt="Product Image" style="height: 370px;">
+                                <img src={{ asset('assets1/images/d5.jfif')}} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= {{ asset('assets1/images/d5.jfif')}} alt="Product Image" style="height: 370px;">
                             </a>
                             <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
                         </div>
@@ -526,8 +534,9 @@
                     <div class="product">
                         <div class="product-thumb">
                             <a href="product-details.html" class="image">
-                                <img src="assets1/images/d2.jfif" alt="Product Image"  style="height: 370px;">
-                                <img class="image-hover " src="assets1/images/d2.jfif" alt="Product Image"  style="height: 370px;">
+                                <img src= {{ asset('assets1/images/d2.jfif')}} alt="Product Image"  style="height: 370px;">
+
+                                <img class="image-hover " src={{ asset('assets1/images/d2.jfif')}} alt="Product Image"  style="height: 370px;">
                             </a>
                             <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
 
@@ -542,9 +551,9 @@
                     <div class="product">
                         <div class="product-thumb">
                             <a href="product-details.html" class="image">
-                                <img src="assets1/images/d1.jfif" alt="Product Image"  style="height: 370px;">
+                                <img src= {{ asset('assets1/images/d1.jfif')}} alt="Product Image"  style="height: 370px;">
 
-                                <img class="image-hover " src="assets1/images/d1.jfif" alt="Product Image"  style="height: 370px;">
+                                <img class="image-hover " src= {{ asset('assets1/images/d1.jfif')}} alt="Product Image"  style="height: 370px;">
                             </a>
                             <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
                         </div>

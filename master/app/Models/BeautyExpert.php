@@ -9,6 +9,7 @@ class BeautyExpert extends Model
     use HasFactory;
 
     protected $fillable = [
+       'id',
         'name',
         'email',
         'address',
@@ -26,6 +27,7 @@ class BeautyExpert extends Model
         'expertise',
         'average_rating',
         'service_id',
+        'working_hours'
     ];
 
     public function service()

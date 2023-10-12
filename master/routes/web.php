@@ -54,3 +54,4 @@ Route::get('/home', [BeautyExpertController::class, 'indexbeauty'])->name('beaut
 Route::get('/shop/{id}', [BeautyExpertController::class, 'shop'])->name('shop.index');
 Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
 
+// Route::post('/bookings', [BookingController::class, 'store'])->name('booking.store');

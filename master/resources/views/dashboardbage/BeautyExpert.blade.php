@@ -18,10 +18,10 @@
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
     <!-- Bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/bootstrap.css') }}">
 
     <!-- App css-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 @endsection
 
 @section('content')

@@ -108,11 +108,11 @@
                 <div class="col learts-mb-40">
                     <div class="category-banner4">
                         {{-- <a href="/shop?ServiceId={{ $service->id }}" class="inner"> --}}
-                            <a href="{{ route('shop.index', ['id' => $service->id]) }}" class="image">
+                            <a href="{{ route('shop.index', ['id' => $service->id]) }}" class="inner">
 
 
                             <div class="image">
-                                <img src="{{ asset($service->image) }}" alt="{{ $service->name }}" style="width: 100%; height: 300px;">
+                                <img src="{{ asset($service->image) }}" alt="{{ $service->name }}" style="width: 300px; height: 300px;">
 
                             </div>
                             <div class="content" data-bg-color="#f4ede7">

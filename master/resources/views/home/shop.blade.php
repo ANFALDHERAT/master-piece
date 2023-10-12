@@ -1,8 +1,9 @@
-@extends('pageslayout.master')
+
+
+    @extends('pageslayout.master')
     <!-- Header Section Start -->
     @section('content')
-    <!-- Mobile Header Section End -->
-    <!-- OffCanvas Search Start -->
+    <!-- Page Title/Header End -->
     <div id="offcanvas-search" class="offcanvas offcanvas-search">
         <div class="inner">
             <div class="offcanvas-search-form">
@@ -89,7 +90,7 @@
                 <div class="col">
 
                     <div class="page-title" >
-                        <h1 class="title" style="color: black;">Shop</h1>
+                        <h1 class="title" style="color: black;">Beauty Experts</h1>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item" style="font-size: 35px;color: black;"><a href="index-2.html">Home</a></li>
                             <li class="breadcrumb-item active" style="font-size: 35px;color: black;">Beauty Experts</li>
