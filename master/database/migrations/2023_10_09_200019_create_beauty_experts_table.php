@@ -15,8 +15,8 @@ class CreateBeautyExpertsTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('password');
-            $table->string('working_hours');
-            $table->boolean('availability')->default(true);
+            $table->text('working_hours');
+            $table->text('availability');
             $table->string('service_area')->nullable();
             $table->string('services_offered')->nullable();
             $table->text('description')->nullable();
@@ -28,6 +28,7 @@ class CreateBeautyExpertsTable extends Migration
             $table->string('expertise')->nullable();
             $table->decimal('average_rating', 5, 2)->nullable();
             $table->unsignedBigInteger('service_id');
+            $table->decimal('price', 10, 2); // Adjust precision and scale as needed
             $table->timestamps();
 
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');

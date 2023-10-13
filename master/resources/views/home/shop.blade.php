@@ -248,7 +248,8 @@
                         <div class="expert-card">
                             <div class="product">
                                 <div class="product-thumb">
-                                    <a href="{{ route('product.index', ['id' =>  $expert->id]) }}" class="image">
+                                    <a href="{{ route('viewDetails.index', ['id' => $expert->id]) }}" class="image">Link Text</a>
+
                                         <img src="{{ $expert->image1 }}" alt="Expert Image" style="height: 250px; border-radius: 10px;">
                                     </a>
                                     <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
@@ -267,7 +268,8 @@
 
                                     <div>
 
-                                        <a href="{{ route('product.index', ['id' =>  $expert->id]) }}" class="btn btn-dark btn-outline-hover-dark"> View Details</a>
+
+                                        <a href="{{ route('viewDetails.index', ['id' => $expert->id]) }}" class="btn btn-dark btn-outline-hover-dark">More Detail</a>
                                     </div>
 
                                 </div>

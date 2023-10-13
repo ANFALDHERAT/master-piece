@@ -23,12 +23,33 @@ class BeautyExpertController extends Controller
         $services =Service::all();
         return view('home.shop', compact('experts','services'));
     }
-    public function product($id)
-{
-    $expert = BeautyExpert::find($id);
-    $services =Service::all();
-    return view('home.product-details-sticky', compact('expert','services'));
-}
+    public function viewDetails($id) {
+        $expert = BeautyExpert::find($id);
+        $services = Service::all();
+        $workingDays = [];
+        $workinghours=[];
+        if ($expert) {
+            // Decode JSON data from the working_hours column into an array
+            $workingDays = json_decode($expert->working_hours, true);
+            $workinghours = json_decode($expert->availability, true);
+
+            // Ensure that $workingDays is an array
+            if (!is_array($workingDays)) {
+                $workingDays = [];
+
+
+            }
+            if (!is_array( $workinghours)) {
+                $workinghours = [];
+
+
+            }
+        }
+
+        return view('home.product-details-sticky', compact('expert', 'services', 'workingDays','workinghours'));
+    }
+
+
 
     public function index()
     {

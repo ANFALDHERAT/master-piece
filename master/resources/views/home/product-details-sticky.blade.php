@@ -3,76 +3,7 @@
     <!-- Header Section Start -->
     @section('content')
     <!-- Page Title/Header End -->
-    <div id="offcanvas-search" class="offcanvas offcanvas-search">
-        <div class="inner">
-            <div class="offcanvas-search-form">
-                <button class="offcanvas-close">×</button>
-                <form action="#">
-                    <div class="row mb-n3">
-                        <div class="col-lg-8 col-12 mb-3"><input type="text" placeholder="Search Products..."></div>
-                        <div class="col-lg-4 col-12 mb-3">
-                            <select class="search-select select2-basic">
-                                <option value="0">All Categories</option>
-                                <option value="kids-babies">Kids &amp; Babies</option>
-                                <option value="home-decor">Home Decor</option>
-                                <option value="gift-ideas">Gift ideas</option>
-                                <option value="kitchen">Kitchen</option>
-                                <option value="toys">Toys</option>
-                                <option value="kniting-sewing">Kniting &amp; Sewing</option>
-                                <option value="pots">Pots</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <p class="search-description text-body-light mt-2"> <span># Type at least 1 character to search</span> <span># Hit enter to search or ESC to close</span></p>
 
-        </div>
-    </div>
-    <!-- OffCanvas Search End -->
-
-    <!-- OffCanvas Wishlist Start -->
-    <div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist">
-        <div class="inner">
-            <div class="head">
-                <span class="title">Wishlist</span>
-                <button class="offcanvas-close">×</button>
-            </div>
-            <div class="body customScroll">
-                <ul class="minicart-product-list">
-                    <li>
-                        <a href="product-details.html" class="image"><img src="assets/images/product/cart-product-1.webp" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="product-details.html" class="title">Walnut Cutting Board</a>
-                            <span class="quantity-price">1 x <span class="amount">$100.00</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-details.html" class="image"><img src="assets/images/product/cart-product-2.webp" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="product-details.html" class="title">Lucky Wooden Elephant</a>
-                            <span class="quantity-price">1 x <span class="amount">$35.00</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-details.html" class="image"><img src="assets/images/product/cart-product-3.webp" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="product-details.html" class="title">Fish Cut Out Set</a>
-                            <span class="quantity-price">1 x <span class="amount">$9.00</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="foot">
-                <div class="buttons">
-                    <a href="wishlist.html" class="btn btn-dark btn-hover-primary">view wishlist</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- OffCanvas Wishlist End -->
 
     <!-- OffCanvas Cart Start -->
@@ -151,8 +82,8 @@
                                                     <p>{{ $expert->service->name }} Specialist</p>
                                                     <p>Experience: {{  $expert->expertise}} years</p>
 
-                                                    <p>Available Days: {{  $expert->availability}}</p>
-                                                    <p>Working Hours: {{  $expert->working_hours}}</p>
+                                                    <p>Address: {{  $expert->address}}</p>
+                                                    <p> {{  $expert->description}}</p>
 
                                                     <!-- <p >price: 10 jd</p> -->
 
@@ -170,17 +101,18 @@
                 <div class="col-lg-5 col-6 learts-mb-40" >
                     <div class="booking-form">
                         <h3>Book an Appointment</h3>
-                        <form>
+                        <form action="{{ route('saveBooking') }}" method="POST">
+                            @csrf <!-- Include the CSRF token for security -->
 
                             <table style="margin-bottom: 10px;">
                                 <tbody>
                                     <tr>
                                         <td>
-
-                                                <input type="checkbox" id="manicure" name="services[]" value="manicure"></td>
-                                                <td><label for="manicure">Manicure:5jd</label></td>
-
-
+                                            <input type="checkbox" id="manicure" name="services[]" value="manicure">
+                                        </td>
+                                        <td>
+                                            <label for="manicure">{{ $expert->service->name }}</label>
+                                        </td>
                                         <td>
                                             <div class="product-quantity" style="margin-bottom: 10px;">
                                                 <span class="qty-btn minus"><i class="ti-minus"></i></span>
@@ -190,53 +122,43 @@
                                         </td>
                                     </tr>
                                     <tr>
-
-                                            <div class="service-option">
-                                                <td><input type="checkbox" id="pedicure" name="services[]" value="pedicure"></td>
-                                               <td> <label for="pedicure">Pedicure:5jd</label></td>
-                                            </div>
+                                        <td>
+                                            <input type="checkbox" id="price" name="services[]" value="price">
                                         </td>
                                         <td>
-                                            <div class="product-quantity" style="margin-bottom:10px;">
-                                                <span class="qty-btn minus"><i class="ti-minus"></i></span>
-                                                <input type="text" class="input-qty" name="pedicure-qty" value="1">
-                                                <span class="qty-btn plus"><i class="ti-plus"></i></span>
-                                            </div>
+                                            <label for="price">Price: {{ $expert->price }}</label>
+                                        </td>
+                                        <td>
+                                            <!-- Add an input for the quantity of the "price" here if needed -->
                                         </td>
                                     </tr>
-
-
-                                    <tr>
-
-                                        <div class="service-option" style="margin-bottom: 5px;">
-                                            <td><input type="checkbox" id="pedicure" name="services[]" value="pedicure"></td>
-                                           <td> <label for="pedicure">Pedicureand manicure:15jd</label></td>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="product-quantity" style="margin-bottom: 10px;">
-                                            <span class="qty-btn minus"><i class="ti-minus"></i></span>
-                                            <input type="text" class="input-qty" name="pedicure-qty" value="1">
-                                            <span class="qty-btn plus"><i class="ti-plus"></i></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                    <!-- Add more service options as needed -->
                                 </tbody>
                             </table>
-                            <label for="date">Select Date:</label>
-                            <input type="date" id="date" name="date" required><br>
+
+                            <label for="day">Select Day:</label>
+                            <select style="width: 90%; height: 35px;" name="selected_day" id="selected_day">
+                                @foreach($workingDays as $day)
+                                    <option value="{{ $day }}" @if(in_array($day, $workingDays)) selected @endif>{{ $day }}</option>
+                                @endforeach
+                            </select>
 
                             <label for="time">Select Time:</label>
-                            <input type="time" id="time" name="time" required>
+                            <select style="width: 90%; height: 35px;" name="selected_time" id="selected_time">
+                                @foreach($workinghours as $time)
+                                    <option value="{{ $time }}" @if(in_array($time, $workinghours)) selected @endif>{{ $time }}</option>
+                                @endforeach
+                            </select>
 
                             <div class="product-buttons" style="margin-left: 40px;margin-top: 25px;">
-
-                                <a href="checkout.html" class="btn btn-dark btn-outline-hover-dark" style="margin-left: 20%;"> Book Now</a>
-
+                                <button type="submit" class="btn btn-dark btn-outline-hover-dark" style="margin-left: 20%;">Book Now</button>
                             </div>
 
+                            <input type="hidden" name="expert_service_name" value="{{ $expert->service->name }}">
+                    <input type="hidden" name="expert_price" value="{{ $expert->price }}">
+                    <input type="hidden" name="expert_id" value="{{ $expert->id }}">
+
                         </form>
+
                     </div>
                 </main>
                     <!-- <ul class="product-title"style="text-align: center; font-size: 30px; color: black;">

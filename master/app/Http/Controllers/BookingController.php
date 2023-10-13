@@ -6,8 +6,49 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\ServicePrice;
 
+
 class BookingController extends Controller
 {
+    public function saveBooking(Request $request)
+    {
+        // Validate the form data
+        $this->validate($request, [
+            'selected_day' => 'required',
+            'selected_time' => 'required',
+        ]);
+
+        // Create a new Booking instance and fill it with form data
+        $booking = new Booking();
+
+        $booking->name = $request->input('expert_service_name');
+        $booking->working_hours = $request->input('selected_day');
+        $booking->availability = $request->input('selected_time');
+        $booking->price = $request->input('expert_price');
+        $defaultUserId = 1; // Replace with the ID of your default user
+        $booking->user_id = $defaultUserId;
+
+
+        // Save the booking
+        $booking->save();
+
+        // Redirect to a confirmation page or a checkout page
+        return view('home.checkout');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function index()
     {
         // Retrieve bookings along with related information
@@ -24,6 +65,11 @@ class BookingController extends Controller
 
         return redirect('/Booking')->with('success', 'Booking deleted successfully');
     }
+
+
+
+
+
 
     // public function store(Request $request)
     // {

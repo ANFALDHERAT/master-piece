@@ -13,16 +13,23 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('expert_id');
+
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('serviceprice_id')->nullable();
+
+            // $table->unsignedBigInteger('serviceprice_id')->nullable();
+            $table->string('name');
+
+            $table->text('working_hours');
+            $table->text('availability');
+
+            $table->decimal('price', 10, 2);
+            $table->integer('quantity')->default(1);
             $table->timestamps();
 
-            $table->foreign('expert_id')->references('id')->on('beauty_experts');
+
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('service_id')->references('id')->on('services');
-            $table->foreign('serviceprice_id')->references('id')->on('service_prices');
+
+            // $table->foreign('serviceprice_id')->references('id')->on('service_prices');
         });
     }
 
@@ -31,6 +38,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->dropColumn('quantity'); // Remove the 'quantity' column
+        });
     }
 };

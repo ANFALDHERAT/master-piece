@@ -32,3 +32,25 @@
 
 <!-- Main Activation JS -->
 <script src="{{ URL::asset('assets1/js/main.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const manicureQtyInput = document.querySelector("input[name='manicure-qty']");
+    const priceLabel = document.querySelector("label[for='price']");
+    const totalPriceElement = document.getElementById('total-price');
+
+    // Function to calculate and update the total price
+    function updateTotalPrice() {
+        const manicureQty = parseInt(manicureQtyInput.value);
+        const price = parseFloat(priceLabel.textContent.split(':')[1].trim());
+        const totalPrice = manicureQty * price;
+        totalPriceElement.textContent = totalPrice + ' JD';
+    }
+
+    // Add an event listener to update the total price when the quantity input changes
+    manicureQtyInput.addEventListener('input', updateTotalPrice);
+
+    // Initial calculation and update of the total price
+    updateTotalPrice();
+});
+
+</script>

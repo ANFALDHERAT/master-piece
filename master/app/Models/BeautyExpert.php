@@ -27,7 +27,8 @@ class BeautyExpert extends Model
         'expertise',
         'average_rating',
         'service_id',
-        'working_hours'
+        'working_hours',
+        'price',
     ];
 
     public function service()

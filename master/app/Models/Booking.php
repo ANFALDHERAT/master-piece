@@ -10,9 +10,12 @@ class Booking extends Model
     use HasFactory;
     protected $fillable = [
         'expert_id',
-        'user_id',
-        'service_id',
-        'serviceprice_id',
+        'name',
+
+    'working_hours',
+        'availability',
+        'price',
+'user_id',
     ];
 
     // Define other properties, relationships, or methods as needed
@@ -23,21 +26,5 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Relationship to the beauty expert associated with the booking
-    public function expert()
-    {
-        return $this->belongsTo(BeautyExpert::class);
-    }
-
-    // Relationship to the service booked in this booking
-    public function service()
-    {
-        return $this->belongsTo(Service::class);
-    }
-
-    public function servicePrice()
-{
-    return $this->belongsTo(ServicePrice::class, 'serviceprice_id');
-}
 
 }

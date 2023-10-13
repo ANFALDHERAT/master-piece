@@ -17,9 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('service_id');
             $table->string('type');
-            $table->decimal('price', 10, 2); // Adjust precision and scale as needed
-            $table->time('time');
-            $table->date('date');
+           
             $table->foreign('service_id')->references('id')->on('services');
 
             $table->timestamps();

@@ -52,6 +52,15 @@ Route::post('/adminLoginPost', [adminLoginController::class, 'adminLoginPost'])-
 
 Route::get('/home', [BeautyExpertController::class, 'indexbeauty'])->name('beauty-experts.indexbeauty');
 Route::get('/shop/{id}', [BeautyExpertController::class, 'shop'])->name('shop.index');
-Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
+// Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
 
 // Route::post('/bookings', [BookingController::class, 'store'])->name('booking.store');
+
+// Route::get('/beauty-expert/{id}', 'BeautyExpertController@showBeautyExpert');
+// Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
+// Route::get('/showpro/{id}', [BeautyExpertController::class, 'showpro'])->name('showpro.index');
+Route::get('/viewdetails/{id}', [BeautyExpertController::class, 'viewDetails'])->name('viewDetails.index');
+// routes/web.php
+Route::post('/save-booking', [BookingController::class, 'saveBooking'])->name('saveBooking');
+
+
