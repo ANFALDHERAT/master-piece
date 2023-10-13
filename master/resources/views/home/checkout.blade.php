@@ -48,46 +48,25 @@
                 <div class="row">
 
                     <div class="col-md-12 col-12 learts-mb-20">
-                        <label for="bdLastName"> Name <abbr class="required">*</abbr></label>
-                        <input type="text" id="bdLastName">
-                    </div>
-                    <div class="col-12 learts-mb-20">
-                        <label for="bdCompanyName">Company name (optional)</label>
-                        <input type="text" id="bdCompanyName">
-                    </div>
-
-                    <div class="col-12 learts-mb-20">
-                        <label for="bdAddress1">Street address <abbr class="required">*</abbr></label>
-                        <input type="text" id="bdAddress1" placeholder="House number and street name">
-                    </div>
-
-                    <div class="col-12 learts-mb-20">
-                        <label for="bdTownOrCity">Town / City <abbr class="required">*</abbr></label>
-                        <input type="text" id="bdTownOrCity">
+                        <label for="bdLastName"> Name <abbr class="required" >*</abbr></label>
+                        <input type="text" id="bdLastName" value="{{ old('name', $user->name) }}">
                     </div>
 
 
                     <div class="col-12 learts-mb-20">
-                        <label for="bdPostcode">Postcode / ZIP (optional)</label>
-                        <input type="text" id="bdPostcode">
+                        <label for="bdAddress1">address <abbr class="required">*</abbr></label>
+                        <input type="text" id="bdAddress1"  placeholder="House number and street name" value="{{ old('address', $user->address) }}">
                     </div>
-                    <div class="col-md-6 col-12 learts-mb-20">
-                        <label for="bdEmail">Email address <abbr class="required">*</abbr></label>
-                        <input type="text" id="bdEmail">
-                    </div>
-                    <div class="col-md-6 col-12 learts-mb-30">
+
+
+                    <div class="col-12 learts-mb-20">
                         <label for="bdPhone">Phone <abbr class="required">*</abbr></label>
-                        <input type="text" id="bdPhone">
+                        <input type="text" id="bdPhone" value="{{ old('phone', $user->phone) }}">
                     </div>
-                    <div class="col-12 learts-mb-40">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Create an account?</label>
-                        </div>
-                    </div>
+
                     <div class="col-12 learts-mb-20">
                         <label for="bdOrderNote">Order Notes (optional)</label>
-                        <textarea id="bdOrderNote" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                        <textarea id="bdOrderNote" placeholder="Notes about your order"></textarea>
                     </div>
                 </div>
             </form>
@@ -100,30 +79,26 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="name">hadeel yousf</th>
+                                    <th class="name">Name of Expert</th>
                                     <th class="total">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($bookings as $booking)
                                 <tr>
-                                    <td class="name">Manicure&nbsp; <strong class="quantity">×&nbsp;2</strong></td>
-                                    <td class="total"><span>5jd</span></td>
+                                    <td class="name">{{ $booking->nameExpert }} <strong class="quantity">× {{ $booking->quantity }}</strong></td>
+                                    <td class="total"><span>{{ $booking->price }}jd</span></td>
                                 </tr>
-                                <tr>
-                                    <td class="name">Pedicure&nbsp; <strong class="quantity">×&nbsp;1</strong></td>
-                                    <td class="total"><span>5jd</span></td>
-                                </tr>
+                                @endforeach
 
                             </tbody>
                             <tfoot>
-                                <tr class="subtotal">
-                                    <th>Subtotal</th>
-                                    <td><span>10jd</span></td>
-                                </tr>
+
                                 <tr class="total">
                                     <th>Total</th>
-                                    <td><strong><span>10jd</span></strong></td>
+                                    <td><strong><span>{{ $bookings->sum('price') }}jd</span></strong></td>
                                 </tr>
+
                             </tfoot>
                         </table>
                     </div>
@@ -165,8 +140,31 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="payment-note">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
-                           <a href="email-template/email-order-success-two.html"> <button class="btn btn-dark btn-outline-hover-dark">place order</button></a>
+
+                            <div class="modal fade" id="orderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="orderSuccessModalLabel">Order Successful</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Your order has been placed successfully.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- "Place Order" button -->
+                              <a href="email-template/email-order-success-two.html" data-toggle="modal" data-target="#orderSuccessModal">
+                                
+                                <button class="btn btn-dark btn-outline-hover-dark">Place Order</button>
+                              </a>
                         </div>
                     </div>
                 </div>

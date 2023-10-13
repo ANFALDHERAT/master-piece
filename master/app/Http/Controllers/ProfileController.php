@@ -1,97 +1,60 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Admin;
+
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-
-
-
-    public function index()
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
     {
-        $data= Admin::all();
-        return view('dashboardbage.adminprofile')->with('data', $data);
-    }
-    public function create()
-    {
-        return view('dashboardbage.adminprofile');
-    }
-
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-            'address' => 'required',
-            'phone' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
-
-
+        return view('profile.edit', [
+            'user' => $request->user(),
         ]);
+    }
 
-        $filename = '';
-        if ($request->hasFile('image')) {
-            $filename = $request->getSchemeAndHttpHost() . '/assets/img/' . time() . '.' . $request->image->extension();
-            $request->image->move(public_path('/assets/img/'), $filename);
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        Admin::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'image' => $filename,
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
         ]);
 
-        return redirect('profile')->with('success', 'profile Added!');
-     }
+        $user = $request->user();
 
+        Auth::logout();
 
+        $user->delete();
 
-    public function edit($id)
-    {
-        $data = Admin::findOrFail($id);
-        return view('dashboardbage.adminprofile')->with('data',$data);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
     }
-
-
-
-    public function update(Request $request, $id)
-    {
-        $data['name'] = $request->name;
-        $data['email'] = $request->email;
-        $data['password'] = bcrypt($request->password);
-        $data['address'] = $request->address;
-        $data['phone'] = $request->phone;
-
-        $filename = '';
-
-        if ($request->hasFile('image')) {
-            $filename = $request->getSchemeAndHttpHost() . '/assets/img/' . time() . '.' . $request->image->extension();
-            $request->image->move(public_path('/assets/img/'), $filename);
-            $data['image'] = $filename;
-        } else {
-            unset($data['image']);
-        }
-
-
-        Admin::where(['id' => $id])->update($data);
-        return redirect('profile')->with('success', 'profile Updated!');
-
-    }
-
-    public function destroy($id)
-    {
-
-        Admin::destroy($id);
-    return redirect('profile')->with('flash_message','profile deleted!');
-
-    }
-
-
 }

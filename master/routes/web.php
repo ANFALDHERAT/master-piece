@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BeautyExpertController;
 use App\Http\Controllers\ServiceController;
@@ -11,7 +14,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\adminLoginController;
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +27,16 @@ use App\Http\Controllers\adminLoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('home.product-details-sticky');
-});
+
+
+
+
+
+
+
+// Route::get('/', function () {
+//     return view('home.index-2');
+// });
 Route::get('/homeAdmin', function () {
     return view('dashboardbage.index');
 });
@@ -50,7 +60,7 @@ Route::post('/adminLoginPost', [adminLoginController::class, 'adminLoginPost'])-
 // Route::get('/adminLogout', [adminLoginController::class, 'adminLogout'])->name('adminLogout');
 // Route::get('/dash', [adminLoginController::class, 'adminLogout']);
 
-Route::get('/home', [BeautyExpertController::class, 'indexbeauty'])->name('beauty-experts.indexbeauty');
+Route::get('/', [BeautyExpertController::class, 'indexbeauty'])->name('beauty-experts.indexbeauty');
 Route::get('/shop/{id}', [BeautyExpertController::class, 'shop'])->name('shop.index');
 // Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
 
@@ -62,5 +72,32 @@ Route::get('/shop/{id}', [BeautyExpertController::class, 'shop'])->name('shop.in
 Route::get('/viewdetails/{id}', [BeautyExpertController::class, 'viewDetails'])->name('viewDetails.index');
 // routes/web.php
 Route::post('/save-booking', [BookingController::class, 'saveBooking'])->name('saveBooking');
+Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout');
+
+//Route::get('/checkout',  [CheckoutController::class, 'showCheckoutPage'])->name('showCheckoutPage');
 
 
+
+
+
+
+
+
+
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

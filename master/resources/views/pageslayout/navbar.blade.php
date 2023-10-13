@@ -11,8 +11,8 @@
             <!-- Header Logo End -->
 
             <!-- Search Start -->
-            <div class="col-auto me-auto">
-                <nav class="site-main-menu site-main-menu-left menu-height-100 justify-content-center">
+            <div class="col">
+                <nav class="site-main-menu site-main-menu-left menu-height-100">
                     <ul>
                         <li ><a href="index-2.html"><span class="menu-text">Home</span></a>
                             </li>
@@ -38,29 +38,57 @@
                         <li ><a href="joinus.html"><span class="menu-text">Join our team</span></a>
 
                         </li>
-
                     </ul>
-                </nav>
+                    </nav>
+                </div>
+
+                <!-- Login and Register Section -->
+                <div class="col-auto ml-auto">
+                    @if (Auth::check())
+                    <div class="d-flex align-items-center">
+                        <a href="{{ route('profile.edit', [Auth::user()]) }}" class="menu-text">{{ Auth::user()->name }}</a>
+                        <form method="POST" style="display: inline-block" action="{{ route('logout') }}">
+                            @csrf
+                            <a href="{{ route('logout') }}" class="btn btn-primary py-2 px-lg-2 rounded-0 d-none d-lg-block ml-2"
+                               style="font-size: 17px; color: white ;margin-left:20px"
+                               onclick="event.preventDefault(); this.closest('form').submit();">
+                               {{ __('Log Out') }}
+                               <i class="fa fa-arrow-right ms-3"></i>
+                            </a>
+                        </form>
+                    </div>
+                    @else
+                    <div class="d-flex align-items-center">
+                        <a href="/login" class="btn btn-primary py-2 px-lg-2 rounded-0 d-none d-lg-block ml-2" style="font-size: 17px; color: white;margin-right:20px">
+                            Login <i class="fa fa-arrow-right " ></i>
+                        </a>
+                      <a href="/register" >
+                             <i class="fas fa-user-plus" style="color: #F8796C;margin-right:5px"></i>Register
+                        </a>
+                    </div>
+                    @endif
+
+        </div>
             </div>
             <!-- Search End -->
 
             <!-- Search Start -->
-            <div class="col-auto d-none d-xl-block">
+            {{-- <div class="col-auto d-none d-xl-block">
                 <div class="header2-search">
                     <form action="#">
                         <input type="text" placeholder="Search...">
                         <button class="btn"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
-            </div>
+            </div> --}}
             <!-- Search End -->
 
             <!-- Header Tools Start -->
             <div class="col-auto">
                 <div class="header-tools justify-content-end">
-                    <div class="">
-                        <a href="colorlib-regform-7/login.html"><i class="far fa-user"></i></a>
-                    </div>
+
+                    {{-- <i class="far fa-user"></i> --}}
+
                     {{-- <div class="header-wishlist">
                         <a href="#offcanvas-wishlist" class="offcanvas-toggle"><span class="wishlist-count">3</span><i class="far fa-heart"></i></a>
                     </div>

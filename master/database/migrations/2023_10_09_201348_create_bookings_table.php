@@ -18,7 +18,7 @@ return new class extends Migration
 
             // $table->unsignedBigInteger('serviceprice_id')->nullable();
             $table->string('name');
-
+            $table->string('nameExpert');
             $table->text('working_hours');
             $table->text('availability');
 

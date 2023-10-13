@@ -57,7 +57,7 @@
 
 
                 <div class="col-lg-4 col-6 learts-mb-40">
-
+                    <form action="{{ auth()->check() ? route('saveBooking') : route('login') }}" method="POST">
                                     <div class="sticky-sidebar-inner">
                                         <h3 class="product-title">{{  $expert->name}}</h3>
                                         <div class="product-ratings"  style="color: #F8796C;">
@@ -101,7 +101,7 @@
                 <div class="col-lg-5 col-6 learts-mb-40" >
                     <div class="booking-form">
                         <h3>Book an Appointment</h3>
-                        <form action="{{ route('saveBooking') }}" method="POST">
+
                             @csrf <!-- Include the CSRF token for security -->
 
                             <table style="margin-bottom: 10px;">
@@ -116,7 +116,7 @@
                                         <td>
                                             <div class="product-quantity" style="margin-bottom: 10px;">
                                                 <span class="qty-btn minus"><i class="ti-minus"></i></span>
-                                                <input type="text" class="input-qty" name="manicure-qty" value="1">
+                                                <input type="text" class="input-qty" name="manicure-qty" value="">
                                                 <span class="qty-btn plus"><i class="ti-plus"></i></span>
                                             </div>
                                         </td>
@@ -149,14 +149,23 @@
                                 @endforeach
                             </select>
 
-                            <div class="product-buttons" style="margin-left: 40px;margin-top: 25px;">
-                                <button type="submit" class="btn btn-dark btn-outline-hover-dark" style="margin-left: 20%;">Book Now</button>
-                            </div>
+
 
                             <input type="hidden" name="expert_service_name" value="{{ $expert->service->name }}">
                     <input type="hidden" name="expert_price" value="{{ $expert->price }}">
                     <input type="hidden" name="expert_id" value="{{ $expert->id }}">
+                    <input type="hidden" name="nameExpert" value="{{ $expert->name }}">
 
+
+                    <div class="product-buttons" style="margin-left: 40px;margin-top: 25px;">
+                        @if(auth()->check()) <!-- Check if the user is authenticated -->
+                            <button type="submit" class="btn btn-dark btn-outline-hover-dark" style="margin-left: 20%;">Book Now</button>
+                        @else
+                        <p style="margin: 10px 0; font-weight: bold;">
+                            Please <a href="{{ route('login') }}" style="color: #F56565; text-decoration: underline;">log in</a> to book an appointment.
+                        </p>
+                        @endif
+                    </div>
                         </form>
 
                     </div>

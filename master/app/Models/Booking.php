@@ -16,6 +16,8 @@ class Booking extends Model
         'availability',
         'price',
 'user_id',
+'nameExpert',
+'quantity',
     ];
 
     // Define other properties, relationships, or methods as needed

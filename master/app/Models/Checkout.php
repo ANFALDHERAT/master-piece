@@ -9,9 +9,7 @@ class Checkout extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'expert_id',
-        'user_id',
-        'payment',
+
         'notes',
         'booking_id',
         'total_amount',
@@ -21,16 +19,7 @@ class Checkout extends Model
     // Define other properties, relationships, or methods as needed
 
     // Relationship to the user who made the checkout
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    // Relationship to the beauty expert associated with the checkout
-    public function expert()
-    {
-        return $this->belongsTo(BeautyExpert::class);
-    }
+   
 
     // Relationship to the booking associated with the checkout
     public function booking()

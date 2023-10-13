@@ -24,15 +24,15 @@ class BookingController extends Controller
         $booking->working_hours = $request->input('selected_day');
         $booking->availability = $request->input('selected_time');
         $booking->price = $request->input('expert_price');
-        $defaultUserId = 1; // Replace with the ID of your default user
-        $booking->user_id = $defaultUserId;
-
+        $booking->nameExpert = $request->input('nameExpert');
+        $booking->user_id = auth()->user()->id;
 
         // Save the booking
         $booking->save();
 
         // Redirect to a confirmation page or a checkout page
-        return view('home.checkout');
+        // return view('home.checkout');
+         return redirect()->route('checkout')->with('success', 'Booking successful.');
     }
 
 
