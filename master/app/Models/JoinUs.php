@@ -10,6 +10,7 @@ class JoinUs extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'email',
         'phone',
         'image',
         'cv',

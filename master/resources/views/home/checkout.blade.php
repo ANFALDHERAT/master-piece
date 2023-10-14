@@ -44,7 +44,8 @@
             <div class="section-title2">
                 <h2 class="title">Billing details</h2>
             </div>
-            <form action="#" class="checkout-form learts-mb-50">
+            <form action="{{ route('checkout') }}"  method="POST" class="checkout-form learts-mb-50">
+                @csrf
                 <div class="row">
 
                     <div class="col-md-12 col-12 learts-mb-20">
@@ -69,7 +70,7 @@
                         <textarea id="bdOrderNote" placeholder="Notes about your order"></textarea>
                     </div>
                 </div>
-            </form>
+
             <div class="section-title2 text-center">
                 <h2 class="title">Your order</h2>
             </div>
@@ -117,7 +118,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
+                                {{-- <div class="card">
                                     <div class="card-header">
                                         <button data-bs-toggle="collapse" data-bs-target="#cashkPayments">Cash on delivery </button>
                                     </div>
@@ -126,8 +127,8 @@
                                             <p>Pay with cash upon delivery.</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card">
+                                </div> --}}
+                                {{-- <div class="card">
                                     <div class="card-header">
                                         <button data-bs-toggle="collapse" data-bs-target="#payPalPayments">PayPal <img src="assets/images/others/pay-2.webp" alt=""></button>
                                     </div>
@@ -138,7 +139,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="text-center">
 
                             <div class="modal fade" id="orderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
@@ -159,12 +160,22 @@
                                   </div>
                                 </div>
                               </div>
-
+                              <div class="form-group">
+                                {{-- <label for="paymentMethod">Payment Method</label> --}}
+                                <select id="paymentMethod" name="payment_method" class="form-control">
+                                    <option value="check">Check</option>
+                                    <option value="cash">Cash on Delivery</option>
+                                    <option value="paypal">PayPal</option>
+                                </select>
+                            </div>
+                              <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                              <input type="hidden" name="notes" value="Your order notes go here">
+                              <input type="hidden" name="total_amount" value="{{ $bookings->sum('price') }}">
                               <!-- "Place Order" button -->
-                              <a href="email-template/email-order-success-two.html" data-toggle="modal" data-target="#orderSuccessModal">
-                                
-                                <button class="btn btn-dark btn-outline-hover-dark">Place Order</button>
-                              </a>
+                              <button id="placeOrderBtn" class="btn btn-dark btn-outline-hover-dark" style="margin-top: 20px">Place Order</button>
+
+                        </div></div>
+                            </form>
                         </div>
                     </div>
                 </div>

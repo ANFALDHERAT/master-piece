@@ -64,7 +64,7 @@
                     @foreach ( $data as $item )
                     <tr>
 
-                      <td>{{ $item->name }}</td>
+                      <td>{{ $item->username }}</td>
                       <td>{{ $item->email}}</td>
                       <td>{{ $item->password}}</td>
                       <td>{{ $item->address}}</td>

@@ -57,4 +57,41 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get a reference to the "Place Order" button
+        var placeOrderBtn = document.getElementById('placeOrderBtn');
 
+        // Add a click event listener to the button
+        placeOrderBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Trigger the form submission using AJAX
+            var form = document.querySelector('.checkout-form');
+            var formData = new FormData(form);
+
+            fetch('{{ route('checkout') }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Data saved successfully, show the modal
+                console.log('Data saved successfully.');
+                $('#orderSuccessModal').modal('show');
+
+                // Set a timeout to hide the modal after 5 minutes (300,000 milliseconds)
+                setTimeout(function() {
+                    console.log('Hiding modal.');
+                    $('#orderSuccessModal').modal('hide');
+                }, 300000); // 5 minutes delay
+            })
+            .catch(error => {
+                // Handle errors if the data couldn't be saved
+                console.error('Error:', error);
+            });
+        });
+    });
+    </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

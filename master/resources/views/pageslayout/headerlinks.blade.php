@@ -25,8 +25,3 @@
 <link rel="stylesheet" href="{{ asset('assets1/css/style.css') }}">
 
 <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-<link rel="stylesheet" href="{{ asset('assets1/css/vendor/vendor.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets1/css/plugins/plugins.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets1/css/style.min.css') }}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-

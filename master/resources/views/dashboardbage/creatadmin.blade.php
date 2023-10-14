@@ -35,7 +35,7 @@
         @csrf
 
         <label>Name</label><br>
-        <input type="text" name="name" id="name" class="form-control"><br>
+        <input type="text" name="username" id="username" class="form-control"><br>
 
         <span>@error('name'){{$message}} @enderror</span><br><br>
 

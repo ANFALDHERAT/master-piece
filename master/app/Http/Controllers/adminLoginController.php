@@ -40,7 +40,7 @@ class adminLoginController extends Controller
             if ($admin) {
 
                 if (Hash::check($credetails['password'], $admin->password)) {
-                      session()->put('loginname', $admin->name);
+                      session()->put('loginname', $admin->username);
 
 
                     $name = session('loginname');

@@ -21,7 +21,30 @@ class CheckoutController extends Controller
 }
 
 
+public function saveCheckout(Request $request)
+{
+    // Validate the form data
+    $this->validate($request, [
+        'booking_id' => 'required',
+        'payment_method' => 'required',
+        'notes' => 'nullable',
+    ]);
 
+    // Create a new Checkout instance and fill it with form data
+    $checkout = new Checkout();
+
+    $checkout->booking_id = $request->input('booking_id');
+    $checkout->payment_method = $request->input('payment_method');
+    $checkout->notes = $request->input('notes');
+    $checkout->total_amount = $request->input('total_amount'); // Add this line
+
+    // Save the checkout
+    $checkout->save();
+
+    // Redirect to a confirmation page or elsewhere
+    // You can also display the "Order Successful" modal here
+    return redirect()->route('checkout')->with('success', 'Order successful.');
+}
 
 
 

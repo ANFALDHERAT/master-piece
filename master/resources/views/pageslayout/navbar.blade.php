@@ -14,7 +14,7 @@
             <div class="col">
                 <nav class="site-main-menu site-main-menu-left menu-height-100">
                     <ul>
-                        <li ><a href="index-2.html"><span class="menu-text">Home</span></a>
+                        <li ><a href="/"><span class="menu-text">Home</span></a>
                             </li>
                         <li class="has-children"><a href="#"><span class="menu-text">services</span></a>
                             <ul class="sub-menu " >
@@ -29,13 +29,13 @@
 
                             </ul>
                         </li>
-                        <li ><a href="about-us.html"><span class="menu-text">About us</span></a>
+                        <li ><a href="/aboutus"><span class="menu-text">About us</span></a>
 
                         </li>
-                        <li ><a href="contact-us.html"><span class="menu-text">Contact us</span></a>
+                        <li ><a href="/contactus"><span class="menu-text">Contact us</span></a>
 
                         </li>
-                        <li ><a href="joinus.html"><span class="menu-text">Join our team</span></a>
+                        <li ><a href="/join-us"><span class="menu-text">Join our team</span></a>
 
                         </li>
                     </ul>
@@ -46,11 +46,11 @@
                 <div class="col-auto ml-auto">
                     @if (Auth::check())
                     <div class="d-flex align-items-center">
-                        <a href="{{ route('profile.edit', [Auth::user()]) }}" class="menu-text">{{ Auth::user()->name }}</a>
+                        <a href="{{ route('profile.edit', [Auth::user()]) }}" class="menu-text" style="color: #F8796C;margin-right:5px">{{ Auth::user()->name }}</a>
                         <form method="POST" style="display: inline-block" action="{{ route('logout') }}">
                             @csrf
                             <a href="{{ route('logout') }}" class="btn btn-primary py-2 px-lg-2 rounded-0 d-none d-lg-block ml-2"
-                               style="font-size: 17px; color: white ;margin-left:20px"
+                               style="font-size: 17px; color: white;margin-right:20px;background-color:#F8796C;border:none ;margin-left:20px"
                                onclick="event.preventDefault(); this.closest('form').submit();">
                                {{ __('Log Out') }}
                                <i class="fa fa-arrow-right ms-3"></i>
@@ -59,10 +59,10 @@
                     </div>
                     @else
                     <div class="d-flex align-items-center">
-                        <a href="/login" class="btn btn-primary py-2 px-lg-2 rounded-0 d-none d-lg-block ml-2" style="font-size: 17px; color: white;margin-right:20px">
+                        <a href="/login" class="btn btn-primary py-2 px-lg-2 rounded-0 d-none d-lg-block ml-2" style="font-size: 17px; color: white;margin-right:20px;background-color:#F8796C;border:none">
                             Login <i class="fa fa-arrow-right " ></i>
                         </a>
-                      <a href="/register" >
+                      <a href="/register" style="color: #F8796C">
                              <i class="fas fa-user-plus" style="color: #F8796C;margin-right:5px"></i>Register
                         </a>
                     </div>

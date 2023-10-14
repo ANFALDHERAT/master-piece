@@ -223,6 +223,79 @@ body,
     color: white;
 }
 
+/*joi us*/
+
+
+.join-team-section {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+.join-team-section h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.join-team-section p {
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.join-team-section ul {
+    list-style: disc;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.join-form label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.join-form input,
+.join-form select,
+.join-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+}
+
+.join-form textarea {
+    resize: vertical;
+}
+
+.join-button {
+    background-color: #F8796C;
+    color: #fff;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.join-button:hover {
+    background-color: #E65557;
+}
+
+
+
+
+
+
+
 
 body {
   font-family: "Futura", Arial, Helvetica, sans-serif;

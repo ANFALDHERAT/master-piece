@@ -22,7 +22,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6',
             'address' => 'required',
@@ -39,7 +39,7 @@ class AdminController extends Controller
         }
 
         Admin::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'address' => $request->address,

@@ -40,6 +40,17 @@ use App\Http\Controllers\adminLoginController;
 Route::get('/homeAdmin', function () {
     return view('dashboardbage.index');
 });
+Route::get('/contactus', function () {
+    return view('home.contact-us');
+});
+Route::get('/aboutus', function () {
+    return view('home.about-us');
+});
+
+Route::get('/profilee', function () {
+    return view('home.userprofile');
+});
+
 
 Route::resource('/category',CategoryController::class);
 Route::resource('/BeautyExpert',BeautyExpertController::class);
@@ -51,7 +62,7 @@ Route::resource('/Booking',BookingController::class);
 Route::resource('/Checkout',CheckoutController::class);
 Route::resource('/user',UserController::class);
 Route::resource('/Admin',AdminController::class);
-Route::resource('/profile',ProfileController::class);
+// Route::resource('/profile',ProfileController::class);
 
 Route::get('/adminLogin', [adminLoginController::class, 'adminLogin'])->name('adminLogin');
 Route::post('/adminLoginPost', [adminLoginController::class, 'adminLoginPost'])->name('adminLogin');
@@ -73,10 +84,15 @@ Route::get('/viewdetails/{id}', [BeautyExpertController::class, 'viewDetails'])-
 // routes/web.php
 Route::post('/save-booking', [BookingController::class, 'saveBooking'])->name('saveBooking');
 Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout');
-
+Route::post('/checkout', [CheckoutController::class, 'saveCheckout'])->name('checkout');
 //Route::get('/checkout',  [CheckoutController::class, 'showCheckoutPage'])->name('showCheckoutPage');
 
+// Route::get('/join', function () {
+//     return view('home.joinus');
+// });
 
+Route::get('/join-us', [JoinUsController::class, 'showForm'])->name('join-us.show');
+Route::post('/join-us', [JoinUsController::class, 'submitForm'])->name('join-us.submit');
 
 
 
@@ -90,9 +106,9 @@ Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
