@@ -44,7 +44,7 @@
             <div class="section-title2">
                 <h2 class="title">Billing details</h2>
             </div>
-            <form action="{{ route('checkout') }}"  method="POST" class="checkout-form learts-mb-50">
+            <form action="{{ route('processTransaction') }}"  method="get" class="checkout-form learts-mb-50">
                 @csrf
                 <div class="row">
 
@@ -52,7 +52,7 @@
                         <label for="bdLastName"> Name <abbr class="required" >*</abbr></label>
                         <input type="text" id="bdLastName" value="{{ old('name', $user->name) }}">
                     </div>
-
+                    <input  type="text" name="user_id" value="{{Auth::user()->id}}" hidden>
 
                     <div class="col-12 learts-mb-20">
                         <label for="bdAddress1">address <abbr class="required">*</abbr></label>
@@ -160,20 +160,24 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="form-group">
+                              {{-- <div class="form-group"> --}}
                                 {{-- <label for="paymentMethod">Payment Method</label> --}}
-                                <select id="paymentMethod" name="payment_method" class="form-control">
+                                {{-- <select id="paymentMethod" name="payment_method" class="form-control">
                                     <option value="check">Check</option>
                                     <option value="cash">Cash on Delivery</option>
                                     <option value="paypal">PayPal</option>
                                 </select>
-                            </div>
+                            </div> --}}
                               <input type="hidden" name="booking_id" value="{{ $booking->id }}">
                               <input type="hidden" name="notes" value="Your order notes go here">
                               <input type="hidden" name="total_amount" value="{{ $bookings->sum('price') }}">
                               <!-- "Place Order" button -->
-                              <button id="placeOrderBtn" class="btn btn-dark btn-outline-hover-dark" style="margin-top: 20px">Place Order</button>
 
+                              <div class="paypal-button-container">
+                                <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Pay with PayPal" class="paypal-logo" width="5" height="100">
+                                <span class="paypal-button-label"></span>
+                            </div>
+                            <img alt=""  width="5" height="10" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
                         </div></div>
                             </form>
                         </div>
@@ -182,5 +186,8 @@
             </div>
         </div>
     </div>
+
+
+
     <!-- Checkout Section End -->
     @endsection

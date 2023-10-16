@@ -248,7 +248,7 @@
                         <div class="expert-card">
                             <div class="product">
                                 <div class="product-thumb">
-                                    <a href="{{ route('viewDetails.index', ['id' => $expert->id]) }}" class="image">Link Text</a>
+                                    <a href="{{ route('viewDetails.index', ['id' => $expert->id]) }}" class="image"></a>
 
                                         <img src="{{ $expert->image1 }}" alt="Expert Image" style="height: 250px; border-radius: 10px;">
                                     </a>

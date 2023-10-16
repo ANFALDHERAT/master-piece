@@ -16,6 +16,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\adminLoginController;
+use App\Http\Controllers\PayPalController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,5 +117,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
+
+/// ////////////////for paypal payment gateway//////////////////////////
+Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');
+Route::get('process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
+Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
+Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
+
+
 
 require __DIR__.'/auth.php';
