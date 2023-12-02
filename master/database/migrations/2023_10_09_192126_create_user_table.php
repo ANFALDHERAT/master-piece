@@ -22,11 +22,16 @@ return new class extends Migration
                 $table->string('address')->nullable();
                 $table->string('phone')->nullable();
                 $table->string('city')->nullable();
-                $table->string('role')->default('user');
+                $table->enum('user_type', ['customer', 'beautyexperts'])->defaultValue('customer');
                 $table->timestamps();
 
         });
+
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->string('role')->default('user'); // 'user' can be the default role
+        // });
     }
+
 
     /**
      * Reverse the migrations.

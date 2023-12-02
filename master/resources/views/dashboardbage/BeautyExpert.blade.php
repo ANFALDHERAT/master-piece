@@ -56,12 +56,15 @@
                                     <th>address</th>
                                     <th>phone</th>
                                     <th>password</th>
+                                    <th>working_hours</th>
                                     <th>availability</th>
                                     <th>Name service</th>
                                     <th>service_area</th>
                                     <th>services_offered</th>
                                     <th>description</th>
                                     <th>average_rating </th>
+                                    <th>price</th>
+                                    <th>expertise</th>
                                     <th>image1</th>
                                     <th>image2</th>
                                     <th>image3</th>
@@ -79,13 +82,15 @@
                       <td>{{ $item->address}}</td>
                       <td>{{ $item->phone}}</td>
                       <td>{{ $item->password}}</td>
-
+                      <td>{{ $item->working_hours}}</td>
                       <td>{{ $item->availability}}</td>
                       <td>{{ $item->service->name }}</td>
                       <td>{{ $item->service_area}}</td>
                       <td>{{ $item->services_offered}}</td>
                       <td>{{ $item->description}}</td>
                       <td>{{ $item->average_rating }}</td>
+                      <td>{{ $item->price }}</td>
+                      <td>{{ $item->expertise}}</td>
 
                      <td>
                       @if ($item->image1)

@@ -4,7 +4,11 @@
     @section('content')
     <!-- OffCanvas Search End -->
 
-    <div class="offcanvas-overlay"></div>
+
+    <div class="offcanvas-overlay">
+
+
+    </div>
 
     <!-- Page Title/Header Start -->
     <div class="page-title-section section"data-bg-image="{{ asset('assets1/images/m2.jpg') }}" style="height: 500px;" >
@@ -15,7 +19,7 @@
                     <div class="page-title">
                         <h1 class="title">Join Us</h1>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"  style="font-size: 25px;color: black;"><a href="index-2.html">Home</a></li>
+                            <li class="breadcrumb-item"  style="font-size: 25px;color: black;"><a href="/">Home</a></li>
                             <li class="breadcrumb-item"  style="font-size: 25px;color: black;"><a href="#">join our team</a></li>
 
                         </ul>
@@ -53,6 +57,9 @@
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required>
 
+                        <label for="password">password:</label>
+                        <input type="text" id="password" name="password" required>
+
                         <label for="phone">Phone:</label>
                         <input type="text" id="phone" name="phone" required>
 
@@ -68,16 +75,24 @@
                         <label for="age">Age</label>
                         <input type="text" id="age" name="age" required>
 
+                        <label for="availability">availability</label>
+                        <input type="text" id="availability" name="availability" required>
+
+
+                        <label for="working_hours">working_hours</label>
+                        <input type="text" id="working_hours" name="working_hours" required>
+
+
                         <label for="price">Price</label>
                         <input type="number" id="price" name="price" required>
 
 
-                        <label for="specialty">Specialty:</label>
-                        <select id="specialty" name="specialty" required>
-                            <option value="Makeup Artist">Makeup Artist</option>
-                            <option value="Manicure and Pedicure Specialist">Manicure and Pedicure Specialist</option>
-                            <option value="Bridal Makeup Artist">Bridal Makeup Artist</option>
-                            <option value="Henna Artist">Henna Artist</option>
+                        <label for="service_id">Specialty:</label>
+                        <select id="service_id" name="service_id" required>
+                            <option value="1">Makeup Artist</option>
+                            <option value="2">Manicure and Pedicure Specialist</option>
+                            <option value="3">Bridal Makeup Artist</option>
+                            <option value="4">Henna Artist</option>
                         </select>
 
                         <label for="description">Description:</label>
@@ -89,7 +104,7 @@
                         <label for="image">Upload Image:</label>
                         <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
 
-                        <button class="btn btn-dark btn-outline-hover-dark learts-mb-10">Submit</button>
+                        <button class="btn btn-dark btn-outline-hover-dark learts-mb-10" type="submit">Submit</button>
                     </form>
                 </div>
             </section>

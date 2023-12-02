@@ -28,36 +28,26 @@
                     <table class="table all-package table-category" id="editableTable">
                         <thead>
                             <tr>
-                                <th>Expert Name</th>
+
                                 <th>User Name</th>
                                 <th>User Email</th>
-                                <th>User Phone</th>
-                                <th>User Address</th>
-                                <th>Payment</th>
-                                <th>Notes</th>
-                                <th>Service Name</th>
-                                <th>Service Type</th>
-                                <th>Service Price</th>
-                                <th>Total Amount</th>
-                                <th>Payment Method</th>
+
+
+                                <th>amount</th>
+                                
+                                <th>payment_status</th>
+
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($bookings as $item)
                             <tr>
-                                <td>{{ $item->expert->name }}</td>
-                                <td>{{ $item->user->name }}</td>
-                                <td>{{ $item->user->email }}</td>
-                                <td>{{ $item->user->phone }}</td>
-                                <td>{{ $item->user->address }}</td>
-                                <td>{{ $item->payment }}</td>
-                                <td>{{ $item->notes }}</td>
-                                <td>{{ $item->booking->service->name }}</td>
-                                <td>{{ $item->booking->servicePrice->type }}</td>
-                                <td>{{ $item->booking->servicePrice->price }}</td>
-                                <td>{{ $item->total_amount }}</td>
-                                <td>{{ $item->payment_method }}</td>
+                                <td>{{ $item->user_name }}</td>
+                                <td>{{ $item->user_email }}</td>
+                                <td>{{ $item->amount }}</td>
+                                <td>{{ $item->payment_status}}</td>
+
                                 <td>
                                     <form method="POST" action="{{ url('/Checkout/' . $item->id) }}"
                                         style="display: inline;">

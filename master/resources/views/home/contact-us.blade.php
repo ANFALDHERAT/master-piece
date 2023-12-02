@@ -48,7 +48,7 @@
                 <div class="col-lg-12 col-md-6 col-12 learts-mb-30">
                     <div class="contact-info" >
                         <h4 class="title" style="align-items: center;">CONTACT</h4>
-                        <span class="info"><i class="icon fas fa-phone-alt"></i> Mobile: (+88) – 1990 – 6886 <br> Hotline: 1800 – 1102</span>
+                        {{-- <span class="info"><i class="icon fas fa-phone-alt"></i> Mobile: (+88) – 1990 – 6886 <br> Hotline: 1800 – 1102</span> --}}
                         <span class="info"><i class="icon far fa-envelope"></i> Mail: <a href="#">contact@leartsstore.com</a></span>
                     </div>
                 </div>
@@ -80,15 +80,16 @@
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
                     <div class="contact-form">
-                        <form action="assets/php/contact-mail.php" id="contact-form" method="post">
+                        <form action="{{ route('contactus.store') }}" id="contact-form" method="POST">
+                            @csrf
                             <div class="row learts-mb-n30">
                                 <div class="col-md-6 col-12 learts-mb-30"><input type="text" placeholder="Your Name *" name="name"></div>
                                 <div class="col-md-6 col-12 learts-mb-30"><input type="email" placeholder="Email *" name="email"></div>
                                 <div class="col-12 learts-mb-30"><textarea name="message" placeholder="Message"></textarea></div>
-                                <div class="col-12 text-center learts-mb-30"><button class="btn btn-dark btn-outline-hover-dark">Submit</button></div>
+                                <div class="col-12 text-center learts-mb-30"><button class="btn btn-dark btn-outline-hover-dark" type="submit">Submit</button></div>
                             </div>
                         </form>
-                        <p class="form-messege"></p>
+                        {{-- <p class="form-messege"></p> --}}
                     </div>
                 </div>
             </div>

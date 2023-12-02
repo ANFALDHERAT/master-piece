@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     public function index()
@@ -21,37 +22,35 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'username' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'address' => 'required',
-            'phone' => 'required|numeric',
-         'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
-
-
+            'phone' => 'required|regex:/^[0-9]{10}$/',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+        ], [
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, and one number.',
+            'phone.regex' => 'The phone number must be a valid 10-digit number.',
         ]);
 
         $filename = '';
         if ($request->hasFile('image')) {
-            $filename = $request->getSchemeAndHttpHost() . '/assets/img/' . time() . '.' . $request->image->extension();
+            $filename = '/assets/img/' . time() . '.' . $request->image->extension();
             $request->image->move(public_path('/assets/img/'), $filename);
         }
 
-        Admin::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'address' => $request->address,
-            'phone' => $request->phone,
-
-
-            'image' => $filename,
-
-        ]);
+        $admin = new Admin();
+        $admin->username = $validatedData['username'];
+        $admin->email = $validatedData['email'];
+        $admin->password = Hash::make($validatedData['password']);
+        $admin->address = $validatedData['address'];
+        $admin->phone = $validatedData['phone'];
+        $admin->image = $filename;
+        $admin->save();
 
         return redirect('Admin')->with('success', 'Admin Added!');
-     }
+    }
 
 
     // public function edit($id)
@@ -110,5 +109,45 @@ class AdminController extends Controller
     {
         Admin::destroy($id);
         return redirect('Admin')->with('flash_message', 'Admin deleted!');
+    }
+
+
+    public function profile($id)
+    {
+        $item = Admin::findOrFail($id);
+        return view('dashboardbage.adminprofile', compact('item'));
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        $request->validate([
+            'username' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+            'phone' => 'required|numeric',
+          'password'=>'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+        ]);
+
+        $admin = Admin::findOrFail($id);
+
+        $data = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'password'=>$request->password,
+
+        ];
+
+        // Check if images are uploaded and update them if needed
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/images');
+            $data['image'] = $imagePath;
+        }
+
+        $admin->update($data);
+
+        return redirect()->route('admin.profile', $admin->id)->with('success', 'Profile updated successfully.');
     }
 }

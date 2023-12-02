@@ -26,7 +26,7 @@
 
 @section('content')
 <br><br><br><br><br><br><br><br><br>
-<div class="card" style="margin: 20px">
+<div class="card" style="margin-left: 280px">
     <div class="card-header">
         Add new Beaty Expert
     </div>
@@ -55,6 +55,10 @@
         <input type="password" name="password" id="password" class="form-control">
         <span>@error('password'){{$message}} @enderror</span><br><br>
 
+        <label>working_hours</label><br>
+        <input type="text" name="working_hours" id="working_hours" class="form-control">
+        <span>@error('working_hours'){{$message}} @enderror</span><br><br>
+
         <label>availability</label><br>
         <input type="text" name="availability" id="availability" class="form-control">
         <span>@error('availability'){{$message}} @enderror</span><br><br>
@@ -78,6 +82,14 @@
         <label>description</label><br>
         <input type="text" name="description" id="description" class="form-control">
         <span>@error('description'){{$message}} @enderror</span><br><br>
+
+        <label>price</label><br>
+        <input type="number" name="price" id="price" class="form-control">
+        <span>@error('price'){{$message}} @enderror</span><br><br>
+
+        <label>expertise</label><br>
+        <input type="number" name="expertise" id="expertise" class="form-control">
+        <span>@error('expertise'){{$message}} @enderror</span><br><br>
 
         <label>average_rating</label><br>
         <input type="number" name="average_rating" id="average_rating" class="form-control">

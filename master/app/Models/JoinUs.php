@@ -9,16 +9,12 @@ class JoinUs extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'image',
-        'cv',
-        'description',
-        'location',
-        'years_of_experience',
-        'age',
-        'price',
-        'profession',
+        'name', 'user_id', 'description', 'email', 'location', 'years_of_experience',
+        'phone', 'cv', 'price', 'working_hours', 'availability', 'age', 'service_id','password',
     ];
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id');
+    }
 }

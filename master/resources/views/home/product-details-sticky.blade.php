@@ -2,13 +2,12 @@
 @extends('pageslayout.master')
     <!-- Header Section Start -->
     @section('content')
-    <!-- Page Title/Header End -->
-
-    <!-- OffCanvas Wishlist End -->
-
-    <!-- OffCanvas Cart Start -->
-
-    <!-- OffCanvas Search End -->
+    <style>
+        /* Define the style for rated stars */
+        .rated {
+            color: gold; /* Change this to your desired color */
+        }
+    </style>
 
     <div class="offcanvas-overlay"></div>
 
@@ -31,17 +30,15 @@
             </div>
         </div>
     </div>
-    <!-- Single Products Section Start -->
+
     <div class="section section-padding border-bottom">
         <div class="container">
             <div class=" row learts-mb-n40">
 
-                <!-- Product Images Start -->
+
                 <div class="col-lg-3 col-12 learts-mb-40">
 
-                        <!-- <span class="product-badges">
-                            <span class="hot">hot</span>
-                        </span> -->
+
 
 
 
@@ -57,8 +54,17 @@
 
 
                 <div class="col-lg-4 col-6 learts-mb-40">
-                    <form action="{{ auth()->check() ? route('saveBooking') : route('login') }}" method="POST">
-                                    <div class="sticky-sidebar-inner">
+                    <form action="{{ auth()->check() ? route('saveBooking') : route('login', ['url' => session('url.intended')]) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $expert->id }}">
+                        @if (!auth()->check())
+                        @php
+        session(['url.intended' => url()->current()]);
+
+                        @endphp
+                    @endif
+
+                                           <div class="sticky-sidebar-inner">
                                         <h3 class="product-title">{{  $expert->name}}</h3>
                                         <div class="product-ratings"  style="color: #F8796C;">
                                             <span class="stars">
@@ -102,46 +108,49 @@
                     <div class="booking-form">
                         <h3>Book an Appointment</h3>
 
-                            @csrf <!-- Include the CSRF token for security -->
+                          <!-- Include the CSRF token for security -->
 
                             <table style="margin-bottom: 10px;">
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <input type="checkbox" id="manicure" name="services[]" value="manicure">
-                                        </td>
+
                                         <td>
                                             <label for="manicure">{{ $expert->service->name }}</label>
-                                        </td>
-                                        <td>
-                                            <div class="product-quantity" style="margin-bottom: 10px;">
-                                                <span class="qty-btn minus"><i class="ti-minus"></i></span>
-                                                <input type="text" class="input-qty" name="manicure-qty" value="">
-                                                <span class="qty-btn plus"><i class="ti-plus"></i></span>
-                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" id="price" name="services[]" value="price">
+                                            <label for="quantity">Number Of Service </label>
+
                                         </td>
+                                        <td>
+                                            <div class="col-md-6 col-12 learts-mb-30">
+                                                <div class="product-quantity" style="margin-bottom: 10px;">
+                                                <span class="qty-btn minus"><i class="ti-minus"></i></span>
+                                                <input type="text" name="quantity" placeholder="Quantity" required>
+                                                <span class="qty-btn plus"><i class="ti-plus"></i></span>
+                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
                                         <td>
                                             <label for="price">Price: {{ $expert->price }}</label>
                                         </td>
-                                        <td>
-                                            <!-- Add an input for the quantity of the "price" here if needed -->
-                                        </td>
+
                                     </tr>
+
                                 </tbody>
                             </table>
-
+                            <br>
                             <label for="day">Select Day:</label>
                             <select style="width: 90%; height: 35px;" name="selected_day" id="selected_day">
                                 @foreach($workingDays as $day)
                                     <option value="{{ $day }}" @if(in_array($day, $workingDays)) selected @endif>{{ $day }}</option>
                                 @endforeach
                             </select>
-
+<br>
                             <label for="time">Select Time:</label>
                             <select style="width: 90%; height: 35px;" name="selected_time" id="selected_time">
                                 @foreach($workinghours as $time)
@@ -150,6 +159,33 @@
                             </select>
 
 
+                            <script>
+$(document).ready(function() {
+    $('#selected_day').change(function() {
+        const selectedDay = $(this).val();
+        const timeDropdown = $('#selected_time');
+
+        // Clear previous options
+        timeDropdown.empty();
+
+        // Make an AJAX request to fetch time slots based on the selected day
+        $.ajax({
+            url: '/get-timeslots/' + selectedDay, // Replace with your route
+            type: 'GET',
+            success: function(response) {
+                // Iterate through the response data and add options to the time dropdown
+                response.forEach(function(time) {
+                    timeDropdown.append(`<option value="${time}">${time}</option>`);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // Handle error (e.g., display an error message)
+            }
+        });
+    });
+});
+                            </script>
 
                             <input type="hidden" name="expert_service_name" value="{{ $expert->service->name }}">
                     <input type="hidden" name="expert_price" value="{{ $expert->price }}">
@@ -170,166 +206,9 @@
 
                     </div>
                 </main>
-                    <!-- <ul class="product-title"style="text-align: center; font-size: 30px; color: black;">
-                       <a class="active" href="#tab-description" >Description</a>
-
-
-                    </ul>
-                    <div class="tab-content product-infor-tab-content">
-                        <div class="tab-pane fade show active" id="tab-description">
-                            <div class="row">
-                                <div class="col-lg-10 col-12 mx-auto">
-                                    <p>Hadeel's manicure services are a blend of precision and elegance. From classic French tips to modern nail art trends, she creates designs that reflect your personality and style. Whether you're looking for a subtle and professional look or something bold and artistic, Hadeel's expertise ensures your nails are a masterpiece.</p>
-                                    <p>
-                                        Hadeel takes the time to understand your preferences and desires before crafting her nail artistry. Every session begins with a personalized consultation, ensuring that your nail designs align with your lifestyle and occasions.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-
 
                 </div>
-                <!-- <div class="col-lg-4 col-6 learts-mb-40">
-                    <div class="section section-padding pt-0">
-                        <div class="container">
 
-
-                                <div class="col learts-mb-50">
-                                    <div class="instafeed instafeed-carousel instafeed-carousel2">
-
-                                            <img src="assets/images/g1.jfif" alt="instagram image" style="height: 250px;width: 400px;" />
-
-
-                                            <img src="assets/images/g2.jfif" alt="instagram image" style="height: 250px;width: 400px;"/>
-
-
-                                            <img src="assets/images/g5.jfif" alt="instagram image" style="height: 250px;width: 400px;" />
-
-
-
-
-                                            <img src="assets/images/g4.jfif" alt="instagram image" style="height: 250px;width: 400px;"/>
-
-
-
-                                            <img src="assets/images/g3.png" alt="instagram image" style="height: 250px;width: 400px;"/>
-
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div> -->
-
-
-
-
-                    <!-- <div class="col-lg-9 col-6 learts-mb-40" style="margin-top: 100px;margin-left: 15%;">
-                  <div class="booking-form">
-                        <h3 style="margin-bottom: 30px;">Book an Appointment</h3>
-                        <form>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td ><span ><b>number of serviece</b></span></td>
-                                        <td class="value">
-                                            <div class="product-quantity">
-                                                <span class="qty-btn minus"><i class="ti-minus"></i></span>
-                                                <input type="text" class="input-qty" value="1">
-                                                <span class="qty-btn plus"><i class="ti-plus"></i></span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table> <br>
-
-                            <div class="product-variations" >
-                                <label for="service-type" >Choose Service Type:</label>
-                                <select id="service-type" name="service-type">
-                                    <option value="manicure">Manicure    5jd</option>
-                                    <option value="pedicure">Pedicure    5jd</option>
-                                    <option value="both">Manicure and Pedicure      10jd</option>
-                                </select>
-                            </div>
-                            <label for="date">Select Date:</label>
-                            <input type="date" id="date" name="date" required><br>
-
-                            <label for="time">Select Time:</label>
-                            <input type="time" id="time" name="time" required>
-
-                            <div class="product-buttons" style="margin-left: 40px;margin-top: 25px;">
-
-                                <a href="checkout.html" class="btn btn-dark btn-outline-hover-dark"> Book Now</a>
-
-                            </div>
-
-                        </form>
-                    </div>
-                </main>
-                    </div> -->
-
-                <!-- Product Images End -->
-
-                <!-- Product Summery Start -->
-
-
-                            <!-- </div> -->
-
-
-
-
-                            <!-- <div class="product-brands">
-                                <span class="title">Brands</span>
-                                <div class="brands">
-                                    <a href="#"><img src="assets/images/brands/brand-1.webp" alt=""></a>
-                                    <a href="#"><img src="assets/images/brands/brand-6.webp" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="product-meta">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td class="label"><span>SKU</span></td>
-                                            <td class="value">040404</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label"><span>Category</span></td>
-                                            <td class="value">
-                                                <ul class="product-category">
-                                                    <li><a href="#">Kitchen</a></li>
-                                                    <li><a href="#">Kniting & Sewing</a></li>
-                                                    <li><a href="#">Pots</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label"><span>Tags</span></td>
-                                            <td class="value">
-                                                <ul class="product-tags">
-                                                    <li><a href="#">handmade</a></li>
-                                                    <li><a href="#">learts</a></li>
-                                                    <li><a href="#">mug</a></li>
-                                                    <li><a href="#">product</a></li>
-                                                    <li><a href="#">learts</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label"><span>Share on</span></td>
-                                            <td class="va">
-                                                <div class="product-share">
-                                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                                                    <a href="#"><i class="fab fa-pinterest"></i></a>
-                                                    <a href="#"><i class="far fa-envelope"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table> -->
                             </div>
                         </div>
                     </div>
@@ -356,30 +235,20 @@
                 <div class="col">
                     <div class="product">
                         <div class="product-thumb">
-                            <a href="product-details.html" class="image">
-                                <!-- <span class="product-badges">
-                                    <span class="onsale">-13%</span>
-                                </span> -->
-                                <img src={{ asset('assets1/images/d2.jfif')}} alt="Product Image" style="height: 370px;">
+                            <a href="" class="image">
+
+                                <img src={{ $expert->image2 }} alt="Product Image" style="height: 370px;">
 
 
 
-                                <img class="image-hover " src={{ asset('assets1/images/d2.jfif') }} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src={{ $expert->image2 }} alt="Product Image" style="height: 370px;">
                             </a>
-                            <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
+                            {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                         </div>
                         <div class="product-info">
-                            <!-- <h6 class="title"><a href="product-details.html">Blue and white plaid nails  -->
+
                             </a></h6>
-                            <!-- <span class="price">
-                                 <span class="old">10jd</span>
-                            <span class="new">10jd</span>
-                            </span> -->
-                            <!-- <div class="product-buttons">
-                                <a href="#quickViewModal" data-bs-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fas fa-search"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Add to Cart"><i class="fas fa-shopping-cart"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fas fa-random"></i></a>
-                            </div> -->
+
                         </div>
                     </div>
                 </div>
@@ -387,90 +256,11 @@
                 <div class="col">
                     <div class="product">
                         <div class="product-thumb">
-                            <a href="product-details.html" class="image">
-                                <img src= {{ asset('assets1/images/d3.jfif')}} alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src= {{ asset('assets1/images/d3.jfif')}} alt="Product Image" style="height: 370px;">
+                            <a href="" class="image">
+                                <img src= {{ $expert->image3 }} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= {{ $expert->image3 }} alt="Product Image" style="height: 370px;">
                             </a>
-                            <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-                        </div>
-                        <div class="product-info">
-                            <!-- <h6 class="title"><a href="product-details.html">burgundy and gold nails</a></h6> -->
-                            <!-- <span class="price">
-                               10jd
-                            </span> -->
-                            <!-- <div class="product-buttons">
-                                <a href="#quickViewModal" data-bs-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fas fa-search"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Add to Cart"><i class="fas fa-shopping-cart"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fas fa-random"></i></a>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="product">
-                        <div class="product-thumb">
-                            <!-- <span class="product-badges">
-                                <span class="hot">hot</span>
-                            </span> -->
-                            <a href="product-details.html" class="image">
-                                <img src= {{ asset('assets1/images/d4.jfif')}} alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src= {{ asset('assets1/images/d4.jfif')}} alt="Product Image" style="height: 370px;">
-                            </a>
-                            <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-                        </div>
-                        <div class="product-info">
-                            <!-- <h6 class="title"><a href="product-details.html">Cute jewel and pink floral nail art
-                            </a></h6>
-                            <span class="price">
-                               10jd
-                            </span>
-                            <div class="product-buttons">
-                                <a href="#quickViewModal" data-bs-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fas fa-search"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Add to Cart"><i class="fas fa-shopping-cart"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fas fa-random"></i></a>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="product">
-                        <div class="product-thumb">
-                            <a href="product-details.html" class="image">
-                                <!-- <span class="product-badges">
-                                    <span class="onsale">-27%</span>
-                                </span> -->
-                                <img src={{ asset('assets1/images/d5.jfif')}} alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src= {{ asset('assets1/images/d5.jfif')}} alt="Product Image" style="height: 370px;">
-                            </a>
-                            <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-                        </div>
-                        <div class="product-info">
-                            <!-- <h6 class="title"><a href="product-details.html">Warm golden hues </a></h6>
-                            <span class="price">
-
-                            <span class="new">10jd</span>
-                            </span>
-                            <div class="product-buttons">
-                                <a href="#quickViewModal" data-bs-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fas fa-search"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Add to Cart"><i class="fas fa-shopping-cart"></i></a>
-                                <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fas fa-random"></i></a>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="product">
-                        <div class="product-thumb">
-                            <a href="product-details.html" class="image">
-                                <img src= {{ asset('assets1/images/d2.jfif')}} alt="Product Image"  style="height: 370px;">
-
-                                <img class="image-hover " src={{ asset('assets1/images/d2.jfif')}} alt="Product Image"  style="height: 370px;">
-                            </a>
-                            <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-
+                            {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                         </div>
                         <div class="product-info">
 
@@ -481,12 +271,45 @@
                 <div class="col">
                     <div class="product">
                         <div class="product-thumb">
-                            <a href="product-details.html" class="image">
-                                <img src= {{ asset('assets1/images/d1.jfif')}} alt="Product Image"  style="height: 370px;">
 
-                                <img class="image-hover " src= {{ asset('assets1/images/d1.jfif')}} alt="Product Image"  style="height: 370px;">
+                            <a href="#" class="image">
+                                <img src= {{ $expert->image4 }} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= {{ $expert->image4 }} alt="Product Image" style="height: 370px;">
                             </a>
-                            <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
+                            {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
+                        </div>
+                        <div class="product-info">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product">
+                        <div class="product-thumb">
+                            <a href="" class="image">
+
+                                <img src={{ $expert->image5 }} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= {{ $expert->image5 }} alt="Product Image" style="height: 370px;">
+                            </a>
+                            {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
+                        </div>
+                        <div class="product-info">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product">
+                        <div class="product-thumb">
+                            <a href="" class="image">
+                                <img src= {{ $expert->image1 }} alt="Product Image"  style="height: 370px;">
+
+                                <img class="image-hover " src={{ $expert->image1 }} alt="Product Image"  style="height: 370px;">
+                            </a>
+                            {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
+
                         </div>
                         <div class="product-info">
 
@@ -499,7 +322,7 @@
                 </div>
 
             </div>
-            <!-- Products End -->
+
 
         </div>
 
@@ -518,8 +341,8 @@
                 <div class="tab-pane fade show active" id="tab-description">
                     <div class="row">
                         <div class="col-lg-10 col-12 mx-auto">
-                            <p>Hadeel Yousf is a skilled and dedicated Manicure and Pedicure Specialist who is passionate about providing exceptional nail care services. With a keen eye for detail and a commitment to client satisfaction, Hadeel brings a personalized touch to each service she offers.</p>
-                            <p>Hadeel Yousf's dedication to the art of nail care and her commitment to enhancing her clients' appearance and confidence make her a sought-after Manicure and Pedicure Specialist. Her warm demeanor, expertise, and creative touch create a memorable and rejuvenating experience for everyone seeking her services.</p>
+                            <p>{{  $expert->description}}</p>
+
                         </div>
                     </div>
                 </div>
@@ -565,77 +388,58 @@
                 </div>
                 <div class="tab-pane fade" id="tab-reviews">
                     <div class="product-review-wrapper">
-                        <span class="title">3 reviews </span>
+                        <span class="title">reviews </span>
                         <ul class="product-review-list">
+                            @foreach ($expert->reviews as $review)
                             <li>
                                 <div class="product-review">
-                                    <div class="thumb"><img src="assets/images/testimonial-1.jpg" alt=""></div>
+                                    <div class="thumb"><img src="assets/images/default_profile_image.jpg" alt=""></div>
                                     <div class="content">
                                         <div class="ratings">
                                             <span class="star-rating">
-                                                <span class="rating-active" style="width: 100%;">ratings</span>
+                                                <span class="rating-active" style="width: {{ $review->rating * 20 }}%;">ratings</span>
                                             </span>
                                         </div>
                                         <div class="meta">
-                                            <h5 class="title">Edna Watson</h5>
-                                            <span class="date">November 27, 2020</span>
+                                            <h5 class="title">{{ $review->user->name }}</h5>
+                                            <span class="date">{{ $review->created_at->format('F j, Y') }}</span>
                                         </div>
-                                        <p>Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.</p>
+                                        <p>{{ $review->comment }}</p>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="product-review">
-                                    <div class="thumb"><img src="assets/images/testimonial-2.jpg" alt=""></div>
-                                    <div class="content">
-                                        <div class="ratings">
-                                            <span class="star-rating">
-                                                <span class="rating-active" style="width: 80%;">ratings</span>
-                                            </span>
-                                        </div>
-                                        <div class="meta">
-                                            <h5 class="title">Scott James</h5>
-                                            <span class="date">November 27, 2020</span>
-                                        </div>
-                                        <p>Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="product-review">
-                                    <div class="thumb"><img src="assets/images/testimonial-3.jpg" alt=""></div>
-                                    <div class="content">
-                                        <div class="ratings">
-                                            <span class="star-rating">
-                                                <span class="rating-active" style="width: 60%;">ratings</span>
-                                            </span>
-                                        </div>
-                                        <div class="meta">
-                                            <h5 class="title">Owen Christ</h5>
-                                            <span class="date">November 27, 2020</span>
-                                        </div>
-                                        <p>Good Product!</p>
-                                    </div>
-                                </div>
-                            </li>
+                        @endforeach
+
+
                         </ul>
                         <span class="title">Add a review</span>
                         <div class="review-form">
                             <p class="note">Your email address will not be published. Required fields are marked *</p>
-                            <form action="#">
+                            <form action="{{ route('expert.submitReview') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="expert_id" value="{{ $expert->id }}">
                                 <div class="row learts-mb-n30">
-                                    <div class="col-md-6 col-12 learts-mb-30"><input type="text" placeholder="Name *"></div>
-                                    <div class="col-md-6 col-12 learts-mb-30"><input type="email" placeholder="Email *"></div>
+                                    <!-- Add your existing form fields here -->
+
+                                    <!-- Add the new review form fields -->
+                                    <div class="col-md-6 col-12 learts-mb-30"><input type="text" name="name" placeholder="Name *" required></div>
+                                    <div class="col-md-6 col-12 learts-mb-30"><input type="email" name="email" placeholder="Email *" required></div>
                                     <div class="col-12 learts-mb-10">
-                                        <div class="form-rating">
-                                            <span class="title">Your rating</span>
-                                            <span class="rating"><span class="star"></span></span>
+                                        <div class="rating" id="Stars">
+                                            <span class="starr" data-rating="1">★</span>
+                                            <span class="starr" data-rating="2">★</span>
+                                            <span class="starr" data-rating="3">★</span>
+                                            <span class="starr" data-rating="4">★</span>
+                                            <span class="starr" data-rating="5">★</span>
                                         </div>
-                                    </div>
-                                    <div class="col-12 learts-mb-30"><textarea placeholder="Your Review *"></textarea></div>
-                                    <div class="col-12 text-center learts-mb-30"><button class="btn btn-dark btn-outline-hover-dark">Submit</button></div>
+                                        <input type="hidden" name="rating" id="ratingInput" value="1">
+                                        </div>
+
+                                    <div class="col-12 learts-mb-30"><textarea name="comment" id="comment" placeholder="Your Review *" rows="4" required></textarea></div>
+                                    <div class="col-12 text-center learts-mb-30"><button class="btn btn-dark btn-outline-hover-dark" type="submit">Submit</button></div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -643,15 +447,25 @@
 
         </div>
     </div></div>
-    <!-- Single Products Infomation Section End -->
-
-    <!-- Recommended Products Section Start -->
-
-    <!-- Recommended Products Section End -->
 
 
-    <!-- JS
-============================================ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Add click event to stars for rating selection
+            $('.starr').on('click', function() {
+                const rating = $(this).attr('data-rating'); // Get the selected rating
+                $('#ratingInput').val(rating); // Set the hidden input field value to the selected rating
+
+                // Remove color from all stars
+                $('.starr').removeClass('rated');
+
+                // Apply color to the selected stars and stars before it
+                $(this).prevAll().addBack().addClass('rated');
+            });
+        });
+    </script>
 @endsection
 

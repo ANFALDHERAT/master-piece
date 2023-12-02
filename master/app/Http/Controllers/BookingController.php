@@ -15,6 +15,8 @@ class BookingController extends Controller
         $this->validate($request, [
             'selected_day' => 'required',
             'selected_time' => 'required',
+            'expert_id' => 'required|exists:beauty_experts,id',
+            'quantity' => 'required|integer|min:1',
         ]);
 
         // Create a new Booking instance and fill it with form data
@@ -25,6 +27,7 @@ class BookingController extends Controller
         $booking->availability = $request->input('selected_time');
         $booking->price = $request->input('expert_price');
         $booking->nameExpert = $request->input('nameExpert');
+        $booking->quantity = $request->input('quantity');
         $booking->user_id = auth()->user()->id;
 
         // Save the booking
@@ -52,7 +55,7 @@ class BookingController extends Controller
     public function index()
     {
         // Retrieve bookings along with related information
-        $bookings = Booking::with(['expert', 'user', 'service', 'servicePrice'])->get();
+        $bookings = Booking::with('user')->get();
 
         return view('dashboardbage.Booking', compact('bookings'));
     }

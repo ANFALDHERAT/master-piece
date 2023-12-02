@@ -27,25 +27,25 @@
                             <i id="sidebar-toggle" data-feather="align-left"></i>
                         </a>
                     </label>
+
+
                 </div>
+
             </div>
+
             <div class="nav-right col">
+
                 <ul class="nav-menus">
-                    <li>
-                        <form class="form-inline search-form">
-                            <div class="form-group">
-                                <input class="form-control-plaintext" type="search" placeholder="Search..">
-                                <span class="d-sm-none mobile-search">
-                                    <i data-feather="search"></i>
-                                </span>
-                            </div>
-                        </form>
+                    <li style="text-align: center;margin-right:200px">
+                    @include('dashlayouts.main-headerbar')
+
                     </li>
                     <li>
                         <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
                             <i data-feather="maximize-2"></i>
                         </a>
                     </li>
+
                     <li class="onhover-dropdown">
                         {{-- <a class="txt-dark" href="javascript:void(0)">
                             <h6 style="color: #F8796C;">EN</h6>
@@ -69,7 +69,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="onhover-dropdown">
+                    {{-- <li class="onhover-dropdown">
                         <i data-feather="bell"></i>
                         <span class="badge badge-pill badge-primary pull-right notification-badge">3</span>
                         <span class="dot"></span>
@@ -113,17 +113,17 @@
                             </li>
                             <li class="txt-dark"><a href="javascript:void(0)">All</a> notification</li>
                         </ul>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a href="javascript:void(0)">
                             <i class="right_side_toggle" data-feather="message-square"></i>
                             <span class="dot"></span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="onhover-dropdown">
                         <div class="media align-items-center">
                             <img class="align-self-center pull-right img-50 blur-up lazyloaded"
-                                src="assets/images/Anfal.png" alt="header-user" style="border-radius: 80%;">
+                                src="" alt="header-user" style="border-radius: 80%;">
                             <div class="dotted-animation">
                                 <span class="animate-circle"></span>
                                 <span class="main-circle"></span>
@@ -131,29 +131,18 @@
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
                             <li>
-                                <a href="/profile">
+                                <a href="/profilee/1">
                                     <i data-feather="user"></i>Edit Profile
                                 </a>
                             </li>
-                            {{-- <li>
-                                <a href="javascript:void(0)">
-                                    <i data-feather="mail"></i>Inbox
-                                </a>
-                            </li> --}}
-                            {{-- <li>
-                                <a href="javascript:void(0)">
-                                    <i data-feather="lock"></i>Lock Screen
-                                </a>
-                            </li> --}}
-                            {{-- <li>
-                                <a href="javascript:void(0)">
-                                    <i data-feather="settings"></i>Settings
-                                </a>
-                            </li> --}}
+            
                             <li>
-                                <a href="javascript:void(0)">
-                                    <i data-feather="log-out"></i>Logout
-                                </a>
+                                @if (session('loginname'))
+                                    <a href="{{ route('adminLogout') }}">
+                            <button type="submit" class="btn btn-warning" style="width: 200px;font-size:10px">Log out</button>
+                          </a>
+                           @endif
+
                             </li>
                         </ul>
                     </li>
@@ -186,7 +175,7 @@
                 </div>
                 <ul class="sidebar-menu">
                     <li>
-                        <a class="sidebar-header" href="/dash">
+                        <a class="sidebar-header" href="/homeAdmin">
                             <i data-feather="home"></i>
                             <span>Dashboard</span>
                         </a>
@@ -231,11 +220,11 @@
                         </a>
 
                         <ul class="sidebar-submenu">
-                            <li>
+                            {{-- <li>
                                 <a href="/category">
                                     <i class="fa fa-circle"></i>Category
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li>
                                 <a href="/Service">
@@ -243,11 +232,11 @@
                                 </a>
                             </li>
 
-                            <li>
+                            {{-- <li>
                                 <a href="/ServicePrice">
                                     <i class="fa fa-circle"></i>Service_Prices
                                 </a>
-                            </li>
+                            </li> --}}
 
                             {{-- <li>
                                 <a href="add-digital-product.html">
@@ -284,7 +273,7 @@
                     <li>
                         <a href="/Checkout">
                             <i class="fa fa-circle"></i>
-                            <span>Check out</span>
+                            <span>Payment</span>
                         </a>
                     </li>
 
@@ -389,29 +378,19 @@
                                 class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="/profile"><i class="fa fa-circle"></i>Profile
+                                <a href="/profilee/1"><i class="fa fa-circle"></i>Profile
                                 </a>
                             </li>
                         </ul>
                     </li>
-{{--
-                    <li>
-                        <a class="sidebar-header" href="invoice.html"><i
-                                data-feather="archive"></i><span>Invoice</span></a>
-                    </li> --}}
 
-                    {{-- <li>
-                        <a class="sidebar-header" href="forgot-password.html">
-                            <i data-feather="key"></i>
-                            <span>Forgot Password</span>
-                        </a>
-                    </li> --}}
 
                     <li>
-                        <a class="sidebar-header" href="login.html">
-                            <i data-feather="log-in"></i>
-                            <span>Log Out</span>
-                        </a>
+                        @if (session('loginname'))
+                        <a href="{{ route('adminLogout') }}">
+                <button type="submit" class="btn " style="width: 150px;font-size:10px;background-color:white;margin-left:20px;margin-top:40px">Log out</button>
+              </a>
+               @endif
                     </li>
                 </ul>
             </div>

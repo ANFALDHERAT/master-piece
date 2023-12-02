@@ -11,7 +11,7 @@
         <div class="swiper-wrapper">
             <div class="home2-slide-item swiper-slide" data-swiper-autoplay="3000" >
                 <div class="home-slide-image" >
-                    <img src="assets1/images/o1.jpg" alt="Slide One Image" class="full-screen-image" >
+                    <img src="{{ asset('assets1/images/o1.jpg') }}" alt="Slide One Image" class="full-screen-image" >
 
                     <div class="home2-slide1-product1">
 
@@ -29,7 +29,7 @@
             </div>
             <div class="home2-slide-item swiper-slide" data-swiper-autoplay="3000" >
                 <div class="home-slide-image" >
-                    <img src="assets1/images/o6.jpg" alt="Slide One Image" class="full-screen-image" >
+                    <img src="{{ asset('assets1/images/o6.jpg')}}" alt="Slide One Image" class="full-screen-image" >
 
 
                 </div>
@@ -44,7 +44,7 @@
             </div>
             <div class="home2-slide-item swiper-slide" data-swiper-autoplay="3000" >
                 <div class="home-slide-image" >
-                    <img src="assets1/images/o5.jpg" alt="Slide One Image" class="full-screen-image" >
+                    <img src="{{ asset('assets1/images/o5.jpg')}}" alt="Slide One Image" class="full-screen-image" >
 
 
 
@@ -102,6 +102,9 @@
      <!-- Category Banner Section Start -->
      <div class="section section-padding pt-0">
         <div class="container">
+            <ul class="title" style="text-align: center;">
+                <h1 class="title" style="margin-bottom: 50px; color: #F8796C;">Beauty Services</h1>
+            </ul>
             <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 learts-mb-n40">
 
                 @foreach($services as $service)
@@ -112,7 +115,7 @@
 
 
                             <div class="image">
-                                <img src="{{ asset($service->image) }}" alt="{{ $service->name }}" style="width: 300px; height: 300px;">
+                                <img src="{{ url('/assets1/images/' . $service->image) }}" alt="{{ $service->name }}" style="width: 300px; height: 300px;">
 
                             </div>
                             <div class="content" data-bg-color="#f4ede7">
@@ -155,7 +158,7 @@
                                     <div class="col">
                                         <div class="product">
                                             <div class="product-thumb">
-                                                <a href="{{ route('shop.index', ['id' => $service->id]) }}" class="image">
+                                                <a href="{{ route('viewDetails.index', ['id' => $expert->id]) }}" class="image">
 
                                                     <img src="{{ asset($expert->image1) }}" alt="Beauty Expert Image" style="height: 370px;">
                                                 </a>
@@ -305,55 +308,36 @@
             </div>
 
             <div class="testimonial-carousel">
+                @foreach($reviews as $review)
                 <div class="col">
                     <div class="testimonial">
-                        <p>I recently discovered the AYSEL and I can't express how delighted I am with their services. This platform has truly transformed my beauty routine. </p>
+                        <p>{{ $review->comment }}</p>
                         <div class="author">
-                            <img src="assets1/images/testimonial-1.jpg" alt="">
-                            <div class="content">
-                                <h6 class="name">Anais Coulon</h6>
-                                <span class="title">Actor</span>
-                            </div>
+                            @if($review->user)
+                                <img src="{{ asset('assets1/images/Capture.PNG')}}" alt="{{ $review->user->name }}">
+                                <div class="content">
+                                    <h6 class="name">{{ $review->user->name }}</h6>
+                                    <!-- Assuming you have a 'title' attribute in your User model -->
+                                    <span class="title">{{ $review->user->title }}</span>
+                                    <!-- Displaying the user's rating with gold stars -->
+                                    <div class="rating">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $review->rating)
+                                                <i class="fa fa-star gold-star"></i>
+                                            @else
+                                                <i class="fa fa-star-o gold-star"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="testimonial">
-                        <p>Booking an appointment through their website was a breeze. The interface is user-friendly, and I could easily choose from a range of services they offer and more. </p>
-                        <div class="author">
-                            <img src="assets1/images/testimonial-2.jpg" alt="">
-                            <div class="content">
-                                <h6 class="name">Ian Schneider</h6>
-                                <span class="title">Actor</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="testimonial">
-                        <p>I was also impressed with the safety measures taken by the Beauty Expert, considering the current situation. She followed all the necessary protocols to ensure a safe </p>
-                        <div class="author">
-                            <img src="assets1/images/testimonial-3.jpg" alt="">
-                            <div class="content">
-                                <h6 class="name">Florence Polla</h6>
-                                <span class="title">Customer</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="testimonial">
-                        <p>The Aysel has truly redefined how I experience beauty services. Their commitment to excellence, professionalism, and the convenience of at-home services make them stand out.</p>
-                        <div class="author">
-                            <img src="assets1/images/teacher-4.png" alt="">
-                            <div class="content">
-                                <h6 class="name">Sally Ramsey</h6>
-                                <span class="title">Reporter</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
+
+
 
         </div>
     </div>
@@ -377,7 +361,7 @@
                         <div class="product-thumb">
 
 
-                                <img src="assets1/images/g3.png" alt="Product Image" style="height: 360px;width: 270px;">
+                                <img src="{{ asset('assets1/images/g3.png')}}" alt="Product Image" style="height: 360px;width: 270px;">
 
 
 
@@ -390,7 +374,7 @@
                     <div class="product">
                         <div class="product-thumb">
 
-                                <img src="assets1/images/d4.jfif" alt="Product Image" style="height: 360px;width: 270px;">
+                                <img src="{{ asset('assets1/images/d4.jfif')}}" alt="Product Image" style="height: 360px;width: 270px;">
 
 
 
@@ -403,7 +387,7 @@
                         <div class="product-thumb">
 
 
-                                <img src="assets1/images/d5.jfif" alt="Product Image" style="height: 360px;width: 270px;">
+                                <img src="{{ asset('assets1/images/d5.jfif')}}" alt="Product Image" style="height: 360px;width: 270px;">
 
 
 
@@ -416,7 +400,7 @@
                         <div class="product-thumb">
 
 
-                                <img src="assets1/images/g1.jfif" alt="Product Image" style="height: 360px;width: 270px;">
+                                <img src="{{ asset('assets1/images/g1.jfif')}}" alt="Product Image" style="height: 360px;width: 270px;">
 
 
 
@@ -429,7 +413,7 @@
                         <div class="product-thumb">
 
 
-                                <img src="assets1/images/g2.jfif" alt="Product Image" style="height: 360px;width: 270px;">
+                                <img src="{{ asset('assets1/images/g2.jfif')}}" alt="Product Image" style="height: 360px;width: 270px;">
 
 
 
@@ -442,7 +426,7 @@
                         <div class="product-thumb">
 
 
-                                <img src="assets1/images/d2.jfif" alt="Product Image" style="height: 360px;width: 270px;">
+                                <img src="{{ asset('assets1/images/d2.jfif')}}" alt="Product Image" style="height: 360px;width: 270px;">
 
 
 

@@ -29,10 +29,16 @@ class BeautyExpert extends Model
         'service_id',
         'working_hours',
         'price',
+        'user_id',
     ];
 
     public function service()
     {
         return $this->belongsTo(Service::class, 'service_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'expert_id');
     }
 }

@@ -28,34 +28,35 @@
                     <table class="table all-package table-category" id="editableTable">
                         <thead>
                             <tr>
+                                <th>Service Name</th>
                                 <th>Expert Name</th>
-                                <th>Time</th>
-                                <th>Date</th>
-                                <th>Description</th>
+                                <th>working_hours</th>
+                                <th>availability</th>
+                                <th>price</th>
+                                <th>quantity</th>
                                 <th>User Name</th>
                                 <th>User Email</th>
-                                <th>User Phone</th>
-                                <th>User Address</th>
-                                <th>Service Name</th>
-                                <th>Service Type</th>
-                                <th>Service Price</th>
+
+
+
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($bookings as $item)
                             <tr>
-                                <td>{{ $item->expert->name }}</td>
-                                <td>{{ $item->time }}</td>
-                                <td>{{ $item->date }}</td>
-                                <td>{{ $item->description }}</td>
+                                <td>{{ $item->name }}</td>
+
+                                <td>{{ $item->nameExpert }}</td>
+                                <td>{{ $item->working_hours }}</td>
+                                <td>{{ $item->availability}}</td>
+                                <td>{{ $item->price }}</td>
+                                <td>{{ $item->quantity}}</td>
                                 <td>{{ $item->user->name }}</td>
                                 <td>{{ $item->user->email }}</td>
-                                <td>{{ $item->user->phone }}</td>
-                                <td>{{ $item->user->address }}</td>
-                                <td>{{ $item->service->name }}</td>
-                                <td>{{ $item->servicePrice->type }}</td>
-                                <td>{{ $item->servicePrice->price }}</td>
+                                
+
+
                                 <td>
                                     <form method="POST" action="{{ url('/Booking/' . $item->id) }}"
                                         style="display: inline;">

@@ -3,51 +3,107 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BeautyExpert;
-
+use App\Models\Review;
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 class BeautyExpertController extends Controller
 {
 
+
     public function indexbeauty()
     {
-        $experts = BeautyExpert::all(); // Replace "Expert" with your actual model name for experts
-        $services =Service::all(); // Replace "Category" with your actual model name for categories
-
-        return view('home.index-2', compact('experts', 'services'));
+        $experts = BeautyExpert::all();
+        $services = Service::all();
+        $reviews = Review::all();
+        return view('home.index-2', compact('experts', 'services','reviews'));
     }
+
     public function shop($id)
     {
-
-        // Use $service_id to filter experts from the database based on the selected service
         $experts = BeautyExpert::where('service_id', $id)->get();
-        $services =Service::all();
-        return view('home.shop', compact('experts','services'));
+        $services = Service::all();
+        $yourData = Service::paginate(1);
+        return view('home.shop', compact('experts', 'services','yourData'));
     }
-    public function viewDetails($id) {
+
+    public function viewDetails($id)
+    {
         $expert = BeautyExpert::find($id);
         $services = Service::all();
         $workingDays = [];
-        $workinghours=[];
+        $workinghours = [];
+
+
+
         if ($expert) {
-            // Decode JSON data from the working_hours column into an array
             $workingDays = json_decode($expert->working_hours, true);
             $workinghours = json_decode($expert->availability, true);
 
-            // Ensure that $workingDays is an array
             if (!is_array($workingDays)) {
                 $workingDays = [];
-
-
             }
-            if (!is_array( $workinghours)) {
+
+            if (!is_array($workinghours)) {
                 $workinghours = [];
-
-
             }
         }
 
-        return view('home.product-details-sticky', compact('expert', 'services', 'workingDays','workinghours'));
+        // Fetch reviews for the expert
+        $reviews = Review::where('expert_id', $id)->get();
+
+        return view('home.product-details-sticky', compact('expert', 'services', 'workingDays', 'workinghours', 'reviews'));
     }
+
+    public function submitReview(Request $request)
+    {
+        // Check if the user is authenticated (logged in)
+        if (Auth::check()) {
+            // Validate the form data
+            $request->validate([
+                'expert_id' => 'required|exists:beauty_experts,id',
+                'name' => 'required',
+                'email' => 'required|email',
+                'rating' => 'required|integer|min:1|max:5',
+                'comment' => 'required',
+
+            ]);
+
+            // Create a new review
+            $review = new Review([
+                'expert_id' => $request->input('expert_id'),
+                'user_id' => Auth::id(), // Set the user_id from the authenticated user
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'rating' => $request->input('rating'),
+                'comment' => $request->input('comment'),
+            ]);
+
+            // Save the review
+            $review->save();
+
+            // Redirect back or to a specific route
+            return redirect()->back()->with('success', 'Review submitted successfully!');
+        } else {
+            // User is not logged in, handle accordingly (e.g., redirect to login)
+            return redirect()->route('login')->with('error', 'You must be logged in to submit a review.');
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -73,8 +129,11 @@ public function store(Request $request)
         'availability' => 'required',
         'service_area' => 'required',
         'services_offered' => 'required',
+        'working_hours'=>'required',
         'description' => 'required',
         'average_rating' => 'required|numeric',
+        'price'=>'required',
+        'expertise'=>'required',
         'image1' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
         'image2' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
         'image3' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
@@ -103,11 +162,14 @@ public function store(Request $request)
         'phone' => $request->phone,
         'password' => bcrypt($request->password),
         'availability' => $request->availability,
+        'working_hours'=>$request->working_hours,
         'service_id' => $request->input('service_id'),
         'service_area' => $request->service_area,
         'services_offered' => $request->services_offered,
         'description' => $request->description,
         'average_rating' => $request->average_rating,
+        'price'=>$request->price,
+        'expertise'=>$request->expertise,
         // Assign each image path to its respective field
         'image1' => $imagePaths['image1'] ?? null,
         'image2' => $imagePaths['image2'] ?? null,
@@ -118,10 +180,11 @@ public function store(Request $request)
 
     return redirect('BeautyExpert')->with('success', 'Beauty Expert Added!');
 }
+
     public function edit($id)
     {
         $data = BeautyExpert::find($id);
-        return view('dashboardbage.editbeauty',);
+        return view('dashboardbage.editbeauty')->with('data',$data);
     }
 
     public function update(Request $request, $id)
@@ -133,10 +196,13 @@ public function store(Request $request)
             'phone' => 'required|numeric',
             'password' => 'required|min:6',
             'availability' => 'required',
+            'working_hours'=>'required',
             'service_area' => 'required',
             'services_offered' => 'required',
             'description' => 'required',
             'average_rating' => 'required|numeric',
+            'price'=>'required',
+            'expertise'=>'required',
             'image1' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
             'image2' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
             'image3' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
@@ -151,6 +217,8 @@ public function store(Request $request)
             'phone' => $request->phone,
             'password' => bcrypt($request->password),
             'availability' => $request->availability,
+            'working_hours'=>$request->working_hours,
+            // 'service_id' => $request->service_id,
             'service_area' => $request->service_area,
             'services_offered' => $request->services_offered,
     'description' => $request->description,
@@ -177,4 +245,6 @@ public function store(Request $request)
         BeautyExpert::destroy($id);
         return redirect('BeautyExpert')->with('flash_message', 'Beauty Expert deleted!');
     }
+
+
 }

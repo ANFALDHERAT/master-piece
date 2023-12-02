@@ -34,10 +34,13 @@
                 <div id="checkout-coupon-form" class="collapse">
                     <div class="coupon-form">
                         <p>If you have a coupon code, please apply it below.</p>
-                        <form action="#" class="learts-mb-n10">
-                            <input class="learts-mb-10" type="text" placeholder="Coupon code">
-                            <button class="btn btn-dark btn-outline-hover-dark learts-mb-10">apply coupon</button>
+                        <form action="{{ route('apply.coupon') }}" method="POST" class="learts-mb-n10" id="couponForm">
+                            @csrf
+                            <input class="learts-mb-10" type="text" placeholder="Coupon code" id="couponCode" name="coupon_code">
+                            <button type="button" class="btn btn-dark btn-outline-hover-dark learts-mb-10" id="applyCouponBtn">Apply coupon</button>
                         </form>
+
+
                     </div>
                 </div>
             </div>
@@ -85,22 +88,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bookings as $booking)
-                                <tr>
-                                    <td class="name">{{ $booking->nameExpert }} <strong class="quantity">× {{ $booking->quantity }}</strong></td>
-                                    <td class="total"><span>{{ $booking->price }}jd</span></td>
-                                </tr>
+                                @php
+                                    $totalPrice = 0;
+                                @endphp
+                                @foreach ($bookings->reverse() as $booking)
+                                    @if ($loop->first)
+                                        <tr>
+                                            <td class="name">{{ $booking->nameExpert }} <strong class="quantity">× {{ $booking->quantity }}</strong></td>
+                                            <td class="total"><span id="totalPrice">{{ $booking->price * $booking->quantity }}jd</span></td>
+                                        </tr>
+                                        @php
+                                            $totalPrice = $booking->price * $booking->quantity;
+                                        @endphp
+                                    @endif
                                 @endforeach
-
                             </tbody>
                             <tfoot>
-
                                 <tr class="total">
                                     <th>Total</th>
-                                    <td><strong><span>{{ $bookings->sum('price') }}jd</span></strong></td>
+                                    <td><strong><span id="displayTotalPrice">{{ $totalPrice }}jd</span></strong></td>
                                 </tr>
-
                             </tfoot>
+
+
+
                         </table>
                     </div>
                 </div>
@@ -118,28 +129,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="card">
-                                    <div class="card-header">
-                                        <button data-bs-toggle="collapse" data-bs-target="#cashkPayments">Cash on delivery </button>
-                                    </div>
-                                    <div id="cashkPayments" class="collapse" data-bs-parent="#paymentMethod">
-                                        <div class="card-body">
-                                            <p>Pay with cash upon delivery.</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="card">
-                                    <div class="card-header">
-                                        <button data-bs-toggle="collapse" data-bs-target="#payPalPayments">PayPal <img src="assets/images/others/pay-2.webp" alt=""></button>
-                                    </div>
-                                    <div id="payPalPayments" class="collapse" data-bs-parent="#paymentMethod">
-                                        <div class="card-body">
-                                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+
                         <div class="text-center">
 
                             <div class="modal fade" id="orderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
@@ -160,17 +150,10 @@
                                   </div>
                                 </div>
                               </div>
-                              {{-- <div class="form-group"> --}}
-                                {{-- <label for="paymentMethod">Payment Method</label> --}}
-                                {{-- <select id="paymentMethod" name="payment_method" class="form-control">
-                                    <option value="check">Check</option>
-                                    <option value="cash">Cash on Delivery</option>
-                                    <option value="paypal">PayPal</option>
-                                </select>
-                            </div> --}}
+
                               <input type="hidden" name="booking_id" value="{{ $booking->id }}">
                               <input type="hidden" name="notes" value="Your order notes go here">
-                              <input type="hidden" name="total_amount" value="{{ $bookings->sum('price') }}">
+                              <input type="hidden" name="total_amount" id="totalAmountInput" value="{{ $totalPrice }}">
                               <!-- "Place Order" button -->
 
                               <div class="paypal-button-container">
@@ -186,6 +169,7 @@
             </div>
         </div>
     </div>
+   
 
 
 

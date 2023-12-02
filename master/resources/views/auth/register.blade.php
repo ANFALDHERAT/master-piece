@@ -61,6 +61,11 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        {{-- <div class="mt-4">
+            <x-input-label for="role" :value="__('Select Role')" />
+            <x-text-input id="role" class="block mt-1 w-full" type="text" name="role" :value="old('role')" required />
+        </div> --}}
+
         <div class="d-flex justify-content-around align-items-left mb-4">
             <a  class="form-check-label" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

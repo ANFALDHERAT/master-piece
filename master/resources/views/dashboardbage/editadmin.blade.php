@@ -27,7 +27,7 @@
 @section('content')
 <br><br><br><br><br><br><br><br><br>
 
-<div class="card" style="margin: 20px">
+<div class="card" style="margin-left: 280px">
     <div class="card-header">
       Edit Beauty Expert
     </div>

@@ -17,7 +17,11 @@ use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\adminLoginController;
 use App\Http\Controllers\PayPalController;
-
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\LaserController;
+use App\Http\Controllers\MedicalController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TimeSlotController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,78 +32,89 @@ use App\Http\Controllers\PayPalController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/apply-coupon', [CheckoutController::class, 'applyCoupon'])->name('apply.coupon');
+
+
+Route::get('/beauty/expert/{id}', [BeautyExpertController::class,'viewDetails'])->name('expert.details');
+Route::post('/beauty/expert/review', [BeautyExpertController::class,'submitReview'])->name('expert.submitReview');
 
 
 
+Route::get('contact-us', [ContactUsController::class, 'index']);
+Route::post('contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
 
 
-
-
-
-// Route::get('/', function () {
-//     return view('home.index-2');
-// });
 Route::get('/homeAdmin', function () {
     return view('dashboardbage.index');
 });
-Route::get('/contactus', function () {
-    return view('home.contact-us');
-});
+
 Route::get('/aboutus', function () {
     return view('home.about-us');
 });
 
-Route::get('/profilee', function () {
-    return view('home.userprofile');
+// Route::get('/profilee', function () {
+//     return view('home.userprofile');
+// });
+
+Route::get('/medicaldetail', function () {
+    return view('home.medicaldetail');
 });
+Route::get('/Laserexperts', [LaserController::class, 'indexlaser'])->name('Laserexperts.indexlaser');
+Route::get('/medical', [MedicalController::class, 'indexMedical'])->name('medical.indexMedical');
+Route::get('/MedicalDetails/{id}', [MedicalController::class, 'MedicalDetails'])->name('MedicalDetails.index');
+Route::get('/LaserDetails/{id}', [LaserController::class, 'LaserDetails'])->name('LaserDetails.index');
+Route::get('/get-timeslots/{selectedDay}', [TimeSlotController::class, 'getTimeSlots']);
 
 
-Route::resource('/category',CategoryController::class);
-Route::resource('/BeautyExpert',BeautyExpertController::class);
-Route::resource('/Service',ServiceController::class);
-Route::resource('/ServicePrice',ServicePriceController::class);
-Route::resource('/Review',ReviewController::class);
-Route::resource('/JoinUs',JoinUsController::class);
-Route::resource('/Booking',BookingController::class);
-Route::resource('/Checkout',CheckoutController::class);
-Route::resource('/user',UserController::class);
-Route::resource('/Admin',AdminController::class);
-// Route::resource('/profile',ProfileController::class);
+// Route::get('/search',[ SearchController::class,'search'])->name('search');
+
+Route::resource('/category',CategoryController::class)->middleware('isLogedin');
+Route::resource('/BeautyExpert',BeautyExpertController::class)->middleware('isLogedin');
+Route::resource('/Service',ServiceController::class)->middleware('isLogedin');
+Route::resource('/ServicePrice',ServicePriceController::class)->middleware('isLogedin');
+Route::resource('/Review',ReviewController::class)->middleware('isLogedin');
+Route::resource('/JoinUs',JoinUsController::class)->middleware('isLogedin');
+Route::post('/accept-join-request/{id}',  [JoinUsController::class, 'acceptJoinRequest'])->name('accept.joinRequest');
+Route::resource('/Booking',BookingController::class)->middleware('isLogedin');
+Route::resource('/Checkout',CheckoutController::class)->middleware('isLogedin');
+Route::resource('/user',UserController::class)->middleware('isLogedin');
+Route::resource('/Admin',AdminController::class)->middleware('isLogedin');
+
 
 Route::get('/adminLogin', [adminLoginController::class, 'adminLogin'])->name('adminLogin');
 Route::post('/adminLoginPost', [adminLoginController::class, 'adminLoginPost'])->name('adminLogin');
+Route::get('/adminLogout', [adminLoginController::class, 'adminLogout'])->name('adminLogout');
+Route::get('/dash', [adminController::class, 'adminLogout']);
 
-// Route::get('/homeAdmin',[CountController::class, 'index'])->name('homeAdmin');
-// Route::get('/adminLogout', [adminLoginController::class, 'adminLogout'])->name('adminLogout');
-// Route::get('/dash', [adminLoginController::class, 'adminLogout']);
+Route::get('/profilee/{id}', [adminController::class, 'profile'])->name('admin.profile');
+
+// Update profile
+Route::patch('/profilee/{id}', [adminController::class, 'updateProfile'])->name('admin.updateProfile');
+
+Route::post('/professionalUpdate',  [ProfileController::class, 'professionalUpdate'])->name('ProfessionalUpdate');
+
+
+
+
+
+
+
+
 
 Route::get('/', [BeautyExpertController::class, 'indexbeauty'])->name('beauty-experts.indexbeauty');
 Route::get('/shop/{id}', [BeautyExpertController::class, 'shop'])->name('shop.index');
-// Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
 
-// Route::post('/bookings', [BookingController::class, 'store'])->name('booking.store');
-
-// Route::get('/beauty-expert/{id}', 'BeautyExpertController@showBeautyExpert');
-// Route::get('/product/{id}', [BeautyExpertController::class, 'product'])->name('product.index');
-// Route::get('/showpro/{id}', [BeautyExpertController::class, 'showpro'])->name('showpro.index');
 Route::get('/viewdetails/{id}', [BeautyExpertController::class, 'viewDetails'])->name('viewDetails.index');
-// routes/web.php
+
 Route::post('/save-booking', [BookingController::class, 'saveBooking'])->name('saveBooking');
 Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'saveCheckout'])->name('checkout');
-//Route::get('/checkout',  [CheckoutController::class, 'showCheckoutPage'])->name('showCheckoutPage');
 
-// Route::get('/join', function () {
-//     return view('home.joinus');
-// });
 
 Route::get('/join-us', [JoinUsController::class, 'showForm'])->name('join-us.show');
 Route::post('/join-us', [JoinUsController::class, 'submitForm'])->name('join-us.submit');
 
-
-
-
-
+Route::post('/accept-join-request/{id}',  [JoinUsController::class, 'acceptJoinRequest'])->name('accept.joinRequest');
 
 
 

@@ -1,27 +1,7 @@
 @extends('dashlayouts.master')
 
 @section('css')
-<link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap">
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
-
-
-    <!-- Font Awesome-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/font-awesome.css') }}">
-
-    <!-- Flag icon-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/flag-icon.css') }}">
-
-    <!-- Liner icon -->
-    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-
-    <!-- Bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/bootstrap.css') }}">
-
-    <!-- App css-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 @endsection
 
 @section('content')
@@ -60,7 +40,7 @@
                             <div class="col-lg-6">
                                 <ol class="breadcrumb pull-right">
                                     <li class="breadcrumb-item">
-                                        <a href="index.html">
+                                        <a href="/homeAdmin">
                                             <i data-feather="home"></i>
                                         </a>
                                     </li>
@@ -76,10 +56,10 @@
                 <!-- Container-fluid starts-->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xl-4">
+                        <div class="col-xl-6" style="margin-left: 500px">
                             <div class="card">
                                 <div class="card-body">
-                                    @foreach ( $data as $item )
+
                                     <div class="profile-details text-center">
                                         <td>
                                             @if ($item->image)
@@ -90,7 +70,7 @@
                                             @endif
                                            </td>
 
-                                        <h5 class="f-w-600 mb-0">{{ $item->name }}</h5>
+                                        <h5 class="f-w-600 mb-0">{{ $item->username }}</h5>
                                         <span>{{ $item->email }}</span>
                                         <div class="social">
                                             {{-- <div class="form-group btn-showcase">
@@ -104,7 +84,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="project-status">
+                                    {{-- <div class="project-status">
                                         <h5 class="f-w-600">Employee Status</h5>
                                         <div class="media">
                                             <div class="media-body">
@@ -136,11 +116,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-8">
+                        <div class="col-xl-8" style="margin-left: 400px">
                             <div class="card tab2-card">
                                 <div class="card-body">
                                     <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
@@ -165,7 +145,7 @@
 
                                                         <tr>
                                                             <td>Name:</td>
-                                                            <td>{{ $item->name }}</td>
+                                                            <td>{{ $item->username }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Password</td>
@@ -196,7 +176,6 @@
                                                         </tr>
 
 
-                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -213,42 +192,45 @@
 
                                                 <div class="row">
 
-                                                    <form action="{{ url('profile/' .$item->id) }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('admin.updateProfile', $item->id) }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
-                                                        @method("PATCH")
-                                                        <input type="hidden" name="id" value="{{ $item->id }}" id="id">
+                                                        @method("POST") <!-- Change this line -->
+                                                        <input type="hidden" name="_method" value="PATCH"> <!-- Add this line -->
+
                                                         <label>Name</label><br>
-                                                        <input type="text" name="name" value="{{ $item->name}}" id="name" class="form-control"><br>
-                                                        <span>@error('name'){{$message}} @enderror</span><br><br>
+                                                        <input type="text" name="username" value="{{ $item->username }}" class="form-control"><br>
+                                                        <span>@error('username'){{ $message }} @enderror</span><br><br>
 
                                                         <label>Email</label><br>
-                                                        <input type="email" name="email" value="{{ $item->email}}"   id="email" class="form-control"><br>
-                                                        <span>@error('email'){{$message}} @enderror</span><br><br>
+                                                        <input type="email" name="email" value="{{ $item->email }}" class="form-control"><br>
+                                                        <span>@error('email'){{ $message }} @enderror</span><br><br>
 
                                                         <label>Password</label><br>
-                                                        <input type="password" name="password" value="{{ $item->password}}"   id="password" class="form-control"><br>
-                                                        <span>@error('password'){{$message}} @enderror</span><br><br>
+                                                        <input type="password" name="password" value="{{ $item->password }}" class="form-control"><br>
+                                                        <span>@error('password'){{ $message }} @enderror</span><br><br>
 
                                                         <label>Address</label><br>
-                                                        <input type="text" name="address" value="{{ $item->address}}"   id="address" class="form-control"><br>
-                                                        <span>@error('address'){{$message}} @enderror</span><br><br>
+                                                        <input type="text" name="address" value="{{ $item->address }}" class="form-control"><br>
+                                                        <span>@error('address'){{ $message }} @enderror</span><br><br>
 
                                                         <label>Phone</label><br>
-                                                        <input type="text" name="phone" value="{{ $item->phone}}"   id="phone" class="form-control"><br>
-                                                        <span>@error('phone'){{$message}} @enderror</span><br><br>
+                                                        <input type="text" name="phone" value="{{ $item->phone }}" class="form-control"><br>
+                                                        <span>@error('phone'){{ $message }} @enderror</span><br><br>
 
                                                         @if ($item->image)
-                                                        <img src="{{ asset('assets/img/' . $item->image) }}" alt="Existing Image" width="100" height="100"><br>
+                                                            <img src="{{ asset('assets/img/' . $item->image) }}" alt="Existing Image" width="100" height="100"><br>
                                                         @endif
-                                                    <!-- Allow uploading a new image -->
+
+                                                        <!-- Allow uploading a new image -->
                                                         <input type="file" name="image" id="image" accept="image/*" class="form-control"><br>
-                                                        <span>@error('image'){{$message}} @enderror</span><br><br>
-                                                        <input type="submit" value="Update" class="btn btn-success"><br>
+                                                        <span>@error('image'){{ $message }} @enderror</span><br><br>
+
+                                                        <button type="submit" class="btn btn-success">Update</button>
                                                     </form>
 
                                             </div>
 
-                                            <form method="POST" action="{{ url('profile' . '/' . $item->id  ) }}" style="display: inline;">
+                                            <form method="POST" action="{{ url('/Admin' . '/' . $item->id  ) }}" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
 

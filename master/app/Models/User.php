@@ -25,7 +25,7 @@ class User extends Authenticatable
         'address',
         'phone',
         'city',
-        'role',
+        'user_type',
     ];
     public function bookings()
     {

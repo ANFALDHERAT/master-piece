@@ -19,4 +19,9 @@ class Service extends Model
     {
         return $this->hasMany(BeautyExpert::class);
     }
+
+    public function joinUs()
+    {
+        return $this->hasMany(JoinUs::class);
+    }
 }

@@ -27,12 +27,12 @@
 @section('content')
 <br><br><br><br><br><br><br><br><br>
 
-<div class="card" style="margin: 20px">
+<div class="card" style="margin-left: 280px">
     <div class="card-header">
       Edit Beauty Expert
     </div>
     <div class="card-body">
-        <form action="{{ url('Admin/' .$data->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('BeautyExpert/' .$data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method("PATCH")
             <input type="hidden" name="id" value="{{ $data->id }}" id="id">
@@ -58,22 +58,24 @@
             <span>@error('phone'){{$message}} @enderror</span><br><br>
 
 
-            <label>password</label><br>
-            <input type="password" name="password" value="{{ $data->password}}"   id="password" class="form-control"><br>
-            <span>@error('password'){{$message}} @enderror</span><br><br>
+
+
+            <label>working_hours</label><br>
+            <input type="text" name="working_hours" value="{{ $data->working_hours}}"   id="working_hours" class="form-control"><br>
+            <span>@error('working_hours'){{$message}} @enderror</span><br><br>
+
 
             <label>availability</label><br>
             <input type="text" name="availability" value="{{ $data->availability}}"   id="availability" class="form-control"><br>
             <span>@error('availability'){{$message}} @enderror</span><br><br>
 
 
-            <select name="service_id" id="service_id" class="form-control">
-                @foreach ($services as $service)
-                    <option value="{{ $service->id }}" {{ $service->id == $data->service_id ? 'selected' : '' }}>
-                        {{ $service->name }}
-                    </option>
-                @endforeach
-            </select>
+            {{-- <label>Select Service</label><br>
+        <select name="service_id" id="service_id" class="form-control">
+            @foreach ($services as $service)
+                <option value="{{ $service->id }}">{{ $service->name }}</option>
+            @endforeach
+        </select><br> --}}
 
 
             <label>service_area</label><br>
@@ -93,6 +95,14 @@
             <label>average_rating</label><br>
             <input type="text" name="average_rating" value="{{ $data->average_rating}}"   id="average_rating" class="form-control"><br>
             <span>@error('average_rating'){{$message}} @enderror</span><br><br>
+
+            <label>price</label><br>
+            <input type="number" name="price" value="{{ $data->price}}"   id="price" class="form-control"><br>
+            <span>@error('price'){{$message}} @enderror</span><br><br>
+
+            <label>expertise</label><br>
+            <input type="text" name="expertise" value="{{ $data->expertise}}"   id="expertise" class="form-control"><br>
+            <span>@error('expertise'){{$message}} @enderror</span><br><br>
 
 
             @if ($data->image1)

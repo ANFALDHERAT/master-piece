@@ -58,6 +58,9 @@
                                 <th>years_of_experience</th>
                                 <th>age</th>
                                 <th>price</th>
+                                <th>working_hours </th>
+                                <th>availability </th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -72,8 +75,31 @@
                                 <td>{{ $item->years_of_experience}}</td>
                                 <td>{{ $item->age}}</td>
                                 <td>{{ $item->price}}</td>
+                                <td>{{ $item->working_hours }}</td>
+                                <td>{{ $item->availability }}</td>
                                 <td>
-                                    <form method="POST" action="{{ url('/JoinUs/' . $item->id) }}"
+                                    <ul style="list-style: none; padding: 0; margin: 0;">
+                                        <li style="display: inline-block; margin-right: 10px;">
+                                            <form action="{{ route('accept.joinRequest', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <button type="submit" class="bg_green" style="color: white; border: 1px solid; padding: 10px; min-width: 80px; border-radius: 5px;background-color:green">
+                                                    Accept
+                                                </button>
+                                            </form>
+                                        </li>
+
+                                        <li style="display: inline-block;">
+                                            <form action="{{ route('JoinUs.destroy', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg_orange" style="color: white; border: 1px solid; padding: 10px; min-width: 80px; border-radius: 5px;background-color:red">
+                                                    Reject
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                    {{-- <form method="POST" action="{{ url('/JoinUs/' . $item->id) }}"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
@@ -81,7 +107,7 @@
                                             onclick="return confirm('Confirm Delete?')"><i
                                                 class="fa fa-trash" title="Delete"
                                                 style="font-size:30px;color:red"></i></button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                             @endforeach
