@@ -34,12 +34,113 @@
                 <div id="checkout-coupon-form" class="collapse">
                     <div class="coupon-form">
                         <p>If you have a coupon code, please apply it below.</p>
-                        <form action="{{ route('apply.coupon') }}" method="POST" class="learts-mb-n10" id="couponForm">
-                            @csrf
-                            <input class="learts-mb-10" type="text" placeholder="Coupon code" id="couponCode" name="coupon_code">
-                            <button type="button" class="btn btn-dark btn-outline-hover-dark learts-mb-10" id="applyCouponBtn">Apply coupon</button>
-                        </form>
+                        <!-- Include SweetAlert CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@10" rel="stylesheet">
 
+<!-- Your HTML form -->
+<form action="{{ route('apply.coupon') }}" method="POST" class="learts-mb-n10" id="couponForm">
+    @csrf
+    <input class="learts-mb-10" type="text" placeholder="Coupon code" id="couponCode" name="coupon_code">
+    <button type="button" class="btn btn-dark btn-outline-hover-dark learts-mb-10" id="applyCouponBtn">Apply coupon</button>
+</form>
+
+<!-- Include SweetAlert JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.getElementById('applyCouponBtn').addEventListener('click', function() {
+        let couponCode = document.getElementById('couponCode').value;
+
+        fetch('{{ route("apply.coupon") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                coupon_code: couponCode
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if ('totalPrice' in data) {
+                // Show SweetAlert for success
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Coupon Applied!',
+                    text: 'Total Price Updated: ' + data.totalPrice + 'jd'
+                });
+
+                // Update the displayed total price wherever needed
+                document.getElementById('displayTotalPrice').textContent = data.totalPrice + 'jd';
+
+                // Update the total amount in the PayPal form
+                document.getElementById('total_amount').value = data.totalPrice; // Assuming data.totalPrice contains the updated amount after the coupon
+            } else if ('error' in data) {
+                // Show SweetAlert for error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: data.error
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+
+<!-- Your JavaScript -->
+{{-- <script>
+    document.getElementById('applyCouponBtn').addEventListener('click', function() {
+        // Fetch the form data
+        let couponCode = document.getElementById('couponCode').value;
+
+        // Make an AJAX request to apply the coupon
+        fetch('{{ route("apply.coupon") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                coupon_code: couponCode
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if ('totalPrice' in data) {
+                // Show SweetAlert for success
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Coupon Applied!',
+                    text: 'Total Price Updated: ' + data.totalPrice + 'jd'
+                });
+
+                // Update the displayed total price wherever needed
+                document.getElementById('displayTotalPrice').value = data.totalPrice;
+
+                // Update the total amount displayed in the table
+                document.getElementById('priceDisplay').innerText = data.totalPrice + 'jd';
+
+                // Update the total_amount input field value based on the coupon
+                document.getElementById('total_amount').value = data.totalPrice; // Assuming data.totalPrice contains the updated amount after the coupon
+            } else if ('error' in data) {
+                // Show SweetAlert for error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: data.error
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script> --}}
 
                     </div>
                 </div>
@@ -84,7 +185,7 @@
                             <thead>
                                 <tr>
                                     <th class="name">Name of Expert</th>
-                                    <th class="total">Subtotal</th>
+                                    <th class="total" >Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,11 +254,12 @@
 
                               <input type="hidden" name="booking_id" value="{{ $booking->id }}">
                               <input type="hidden" name="notes" value="Your order notes go here">
-                              <input type="hidden" name="total_amount" id="totalAmountInput" value="{{ $totalPrice }}">
+                              <input type="hidden" name="total_amount" id="total_amount" value="{{ $totalPrice }}">
+
                               <!-- "Place Order" button -->
 
                               <div class="paypal-button-container">
-                                <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Pay with PayPal" class="paypal-logo" width="5" height="100">
+                                <input type="image" name="submit" src="{{ asset('assets1/images/paypal.PNG') }}" alt="Pay with PayPal" class="paypal-logo"  height="100" style="width: 200px;margin-left:200px">
                                 <span class="paypal-button-label"></span>
                             </div>
                             <img alt=""  width="5" height="10" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
@@ -169,7 +271,7 @@
             </div>
         </div>
     </div>
-   
+
 
 
 

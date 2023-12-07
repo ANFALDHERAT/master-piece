@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\BeautyExpert;
+use App\Models\Booking;
+use Illuminate\Support\Facades\Log;
 class ProfileController extends Controller
 {
     /**
@@ -24,49 +26,70 @@ class ProfileController extends Controller
 
      public function professionalUpdate(Request $request)
      {
-         // Assuming you have a user_id associated with the professional info
-         $user = $request->user();
-         $professional = $user->professional; // Assuming a one-to-one relationship, adjust if needed
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+            'phone' => 'required|numeric',
+            'password' => 'required|min:6',
+            'availability' => 'required',
+            'working_hours'=>'required',
+            'service_area' => 'required',
+            'services_offered' => 'required',
+            'description' => 'required',
+            'average_rating' => 'required|numeric',
+            'price'=>'required',
+            'expertise'=>'required',
+            'image1' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+            'image2' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+            'image3' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+            'image4' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+            'image5' => 'image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
+        ]);
 
-         if (!$professional) {
-             // Handle the case where professional info doesn't exist for the user
-             return redirect()->route('profile.edit')->with('status','Professional info not found');
-         }
-         if ($request->hasFile('image')) {
-             // Validate and store the uploaded image
-             $image = $request->file('image');
-             $imageName = time() . '.' . $image->getClientOriginalExtension();
-             $image->move(public_path('img/'), $imageName);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'password' => bcrypt($request->password),
+            'availability' => $request->availability,
+            'working_hours'=>$request->working_hours,
+            // 'service_id' => $request->service_id,
+            'service_area' => $request->service_area,
+            'services_offered' => $request->services_offered,
+    'description' => $request->description,
+            'average_rating' => $request->average_rating,
+        ];
 
-             $professional->image =  $imageName;
-         }
-         // Update the fields
-         $professional->name = $request->name;
-         $professional->description = $request->description;
+        // Check if images are uploaded and update them if needed
+        for ($i = 1; $i <= 5; $i++) {
+            $imageName = 'image' . $i;
+            if ($request->hasFile($imageName)) {
+                $imagePath = $request->getSchemeAndHttpHost() . '/assets/img/' . time() . '.' . $request->$imageName->extension();
+                $request->$imageName->move(public_path('/assets/img/'), $imagePath);
+                $data[$imageName] = $imagePath;
+            }
+        }
 
-         $professional->email = $request->email;
-         $professional->service_area = $request->service_area;
+        // BeautyExpert::where(['id' => $id])->update($data);
 
-         $professional->expertise = $request->expertise;
+             return redirect()->route('profile.edit')->with('status', 'professional-info-updated');
 
-         $professional->price = $request->price;
-        //  $professional->average_rating = $request->average_rating;
-         $professional->working_hours = $request->working_hours;
-         $professional->availability = $request->availability;
-         $professional->phone = $request->phone;
-         // Save the changes
-         $professional->save();
-
-         return redirect()->route('profile.edit')->with('status', 'professional-info-updated');
      }
 
 
 
 
 
+    //  public function show_order(){
 
+    //     $user = auth()->user();
+    //     $orders = $user->orders()->paginate(10);
 
-
+    //     // $orders = Order::with('user')->paginate(10);
+    //     return view('profile.edit', compact('orders'));
+    // }
 
 
 
@@ -74,8 +97,8 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $professionalInfo = BeautyExpert::where('user_id', $user->id)->first(); // Adjust this based on your actual relationship
-
-        return view('profile.edit', compact('user', 'professionalInfo'));
+        $bookings = Booking::with('user')->get();
+        return view('profile.edit', compact('user', 'professionalInfo','bookings'));
     }
 
 
@@ -134,4 +157,6 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
 }

@@ -180,7 +180,7 @@
                                 <div class="product-thumb">
                                     <a href="{{ route('viewDetails.index', ['id' => $expert->id]) }}" class="image"></a>
 
-                                        <img src="{{ $expert->image1 }}" alt="Expert Image" style="height: 230px; border-radius: 10px;width:100%">
+                                        <img src="{{ url('/assets1/images/' . $expert->image1) }}" alt="Expert Image" style="height: 230px; border-radius: 10px;width:100%">
                                     </a>
                                     {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                                 </div>

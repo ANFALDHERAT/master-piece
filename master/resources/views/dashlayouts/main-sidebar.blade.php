@@ -123,7 +123,7 @@
                     <li class="onhover-dropdown">
                         <div class="media align-items-center">
                             <img class="align-self-center pull-right img-50 blur-up lazyloaded"
-                                src="" alt="header-user" style="border-radius: 80%;">
+                                src="{{ asset('assets/images/WhatsApp Image 2023-10-02 at 3.34.14 PM.jpeg') }}" alt="header-user" style="border-radius: 80%;">
                             <div class="dotted-animation">
                                 <span class="animate-circle"></span>
                                 <span class="main-circle"></span>
@@ -135,7 +135,7 @@
                                     <i data-feather="user"></i>Edit Profile
                                 </a>
                             </li>
-            
+
                             <li>
                                 @if (session('loginname'))
                                     <a href="{{ route('adminLogout') }}">

@@ -51,43 +51,70 @@
                     <form action="{{ route('join-us.submit') }}" method="post" class="join-form" enctype="multipart/form-data">
                         @csrf
 
-                        <label for="name">Name:</label>
+                        <label for="name">Name<span style="color: red">*</span>:</label>
                         <input type="text" id="name" name="name" required>
+                        @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-                        <label for="email">Email:</label>
+
+                        <label for="email">Email<span style="color: red">*</span>:</label>
                         <input type="email" id="email" name="email" required>
+@error('email')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+                        <label for="password">Password<span style="color: red">*</span>:</label>
+                        <input type="password" id="password" name="password" required>
+                        @error('password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-                        <label for="password">password:</label>
-                        <input type="text" id="password" name="password" required>
 
-                        <label for="phone">Phone:</label>
+                        <label for="phone">Phone<span style="color: red">*</span>:</label>
                         <input type="text" id="phone" name="phone" required>
+                        @error('phone')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
 
-                        <label for="location">Location:</label>
+                        <label for="location">Location<span style="color: red">*</span>:</label>
                         <input type="text" id="location" name="location" required>
+                        @error('location')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-
-                        <label for="years_of_experience">Years of experience:</label>
+                        <label for="years_of_experience">Years of Experience<span style="color: red">*</span>:</label>
                         <input type="text" id="years_of_experience" name="years_of_experience" required>
+                        @error('years_of_experience')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-
-                        <label for="age">Age</label>
+                        <label for="age">Age<span style="color: red">*</span>:</label>
                         <input type="text" id="age" name="age" required>
+                        @error('age')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-                        <label for="availability">availability</label>
+
+                        <label for="availability">Availability<span style="color: red">*</span>:</label>
                         <input type="text" id="availability" name="availability" required>
-
-
-                        <label for="working_hours">working_hours</label>
+                        @error('availability')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                        <label for="working_hours">Working Hours<span style="color: red">*</span>:</label>
                         <input type="text" id="working_hours" name="working_hours" required>
+                        @error('working_hours')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
 
-                        <label for="price">Price</label>
+                        <label for="price">Price<span style="color: red">*</span>:</label>
                         <input type="number" id="price" name="price" required>
+                        @error('price')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-
-                        <label for="service_id">Specialty:</label>
+                        <label for="service_id">Specialty<span style="color: red">*</span>:</label>
                         <select id="service_id" name="service_id" required>
                             <option value="1">Makeup Artist</option>
                             <option value="2">Manicure and Pedicure Specialist</option>
@@ -95,17 +122,29 @@
                             <option value="4">Henna Artist</option>
                         </select>
 
-                        <label for="description">Description:</label>
+                        <label for="description">Description<span style="color: red">*</span>:</label>
                         <textarea id="description" name="description" rows="4" required></textarea>
+                        @error('description')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-                        <label for="cv">Upload Certificate:</label>
+
+                        <label for="cv">Upload Certificate<span style="color: red">*</span>:</label>
                         <input type="file" id="cv" name="cv" accept=".pdf" required>
+                        @error('cv')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
-                        <label for="image">Upload Image:</label>
+                        <label for="image">Upload Image<span style="color: red">*</span>:</label>
+
                         <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
+                        @error('image')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
                         <button class="btn btn-dark btn-outline-hover-dark learts-mb-10" type="submit">Submit</button>
                     </form>
+
                 </div>
             </section>
     </div>
@@ -113,6 +152,29 @@
     <!-- Feature Brands Section End -->
 
     <!-- Brand Carousel Section Start -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+    <!-- Your HTML form -->
+    <!-- ... your form ... -->
+
+    <script>
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        @elseif(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        @endif
+    </script>
     <!-- Brand Carousel Section End -->
     @endsection

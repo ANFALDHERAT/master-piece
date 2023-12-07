@@ -42,7 +42,7 @@
 
 
 
-                            <img src="{{ $expert->image1 }}" alt="Expert Image" style="height:400px;width: 400px;">
+                            <img src="{{ url('/assets1/images/' . $expert->image1) }}" alt="Expert Image" style="height:400px;width: 400px;">
                 </div>
 
 
@@ -145,46 +145,56 @@
                             </table>
                             <br>
                             <label for="day">Select Day:</label>
-                            <select style="width: 90%; height: 35px;" name="selected_day" id="selected_day">
+                            <select style="width: 90%; height: 35px;" name="selected_day" id="selected_day" >
                                 @foreach($workingDays as $day)
                                     <option value="{{ $day }}" @if(in_array($day, $workingDays)) selected @endif>{{ $day }}</option>
                                 @endforeach
                             </select>
 <br>
                             <label for="time">Select Time:</label>
-                            <select style="width: 90%; height: 35px;" name="selected_time" id="selected_time">
+                            <select style="width: 90%; height: 35px;" name="selected_time" id="selected_time" >
                                 @foreach($workinghours as $time)
                                     <option value="{{ $time }}" @if(in_array($time, $workinghours)) selected @endif>{{ $time }}</option>
                                 @endforeach
                             </select>
 
 
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                             <script>
-$(document).ready(function() {
-    $('#selected_day').change(function() {
-        const selectedDay = $(this).val();
-        const timeDropdown = $('#selected_time');
+                                $(document).ready(function() {
+                                    // Function to fetch time slots based on the selected day
+                                    function fetchTimeSlots(selectedDay) {
+                                        const timeDropdown = $('#selected_time');
 
-        // Clear previous options
-        timeDropdown.empty();
+                                        // Clear previous options
+                                        timeDropdown.empty();
 
-        // Make an AJAX request to fetch time slots based on the selected day
-        $.ajax({
-            url: '/get-timeslots/' + selectedDay, // Replace with your route
-            type: 'GET',
-            success: function(response) {
-                // Iterate through the response data and add options to the time dropdown
-                response.forEach(function(time) {
-                    timeDropdown.append(`<option value="${time}">${time}</option>`);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                // Handle error (e.g., display an error message)
-            }
-        });
-    });
-});
+                                        // Make an AJAX request to fetch time slots based on the selected day
+                                        $.ajax({
+                                            url: '/get-timeslots/' + selectedDay, // Replace with your route
+                                            type: 'GET',
+                                            success: function(response) {
+                                                // Iterate through the response data and add options to the time dropdown
+                                                response.forEach(function(time) {
+                                                    timeDropdown.append(`<option value="${time}">${time}</option>`);
+                                                });
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error(error);
+                                                // Handle error (e.g., display an error message)
+                                            }
+                                        });
+                                    }
+
+                                    // Event listener for when a day is selected
+                                    $('#selected_day').change(function() {
+                                        const selectedDay = $(this).val(); // Get the selected day
+                                        fetchTimeSlots(selectedDay); // Fetch and populate time slots for the selected day
+
+                                        // Disable the selected day in the dropdown
+                                        $(this).find('option[value="' + selectedDay + '"]').prop('disabled', true);
+                                    });
+                                });
                             </script>
 
                             <input type="hidden" name="expert_service_name" value="{{ $expert->service->name }}">
@@ -237,11 +247,11 @@ $(document).ready(function() {
                         <div class="product-thumb">
                             <a href="" class="image">
 
-                                <img src={{ $expert->image2 }} alt="Product Image" style="height: 370px;">
+                                <img src={{ url('/assets1/images/' . $expert->image2) }} alt="Product Image" style="height: 370px;">
 
 
 
-                                <img class="image-hover " src={{ $expert->image2 }} alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src="{{ url('/assets1/images/' . $expert->image2) }}" alt="Product Image" style="height: 370px;">
                             </a>
                             {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                         </div>
@@ -257,8 +267,8 @@ $(document).ready(function() {
                     <div class="product">
                         <div class="product-thumb">
                             <a href="" class="image">
-                                <img src= {{ $expert->image3 }} alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src= {{ $expert->image3 }} alt="Product Image" style="height: 370px;">
+                                <img src= "{{ url('/assets1/images/' . $expert->image3) }}" alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= "{{ url('/assets1/images/' . $expert->image3) }}" alt="Product Image" style="height: 370px;">
                             </a>
                             {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                         </div>
@@ -273,8 +283,8 @@ $(document).ready(function() {
                         <div class="product-thumb">
 
                             <a href="#" class="image">
-                                <img src= {{ $expert->image4 }} alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src= {{ $expert->image4 }} alt="Product Image" style="height: 370px;">
+                                <img src= "{{ url('/assets1/images/' . $expert->image4) }}" alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= "{{ url('/assets1/images/' . $expert->image4) }}" alt="Product Image" style="height: 370px;">
                             </a>
                             {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                         </div>
@@ -289,8 +299,8 @@ $(document).ready(function() {
                         <div class="product-thumb">
                             <a href="" class="image">
 
-                                <img src={{ $expert->image5 }} alt="Product Image" style="height: 370px;">
-                                <img class="image-hover " src= {{ $expert->image5 }} alt="Product Image" style="height: 370px;">
+                                <img src="{{ url('/assets1/images/' . $expert->image5) }}" alt="Product Image" style="height: 370px;">
+                                <img class="image-hover " src= "{{ url('/assets1/images/' . $expert->image5) }}" alt="Product Image" style="height: 370px;">
                             </a>
                             {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
                         </div>
@@ -304,9 +314,9 @@ $(document).ready(function() {
                     <div class="product">
                         <div class="product-thumb">
                             <a href="" class="image">
-                                <img src= {{ $expert->image1 }} alt="Product Image"  style="height: 370px;">
+                                <img src= "{{ url('/assets1/images/' . $expert->image1) }}" alt="Product Image"  style="height: 370px;">
 
-                                <img class="image-hover " src={{ $expert->image1 }} alt="Product Image"  style="height: 370px;">
+                                <img class="image-hover " src="{{ url('/assets1/images/' . $expert->image1) }}" alt="Product Image"  style="height: 370px;">
                             </a>
                             {{-- <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a> --}}
 

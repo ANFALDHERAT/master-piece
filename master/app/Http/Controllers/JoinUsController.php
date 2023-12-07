@@ -6,7 +6,8 @@ use App\Models\JoinUs;
 use App\Models\BeautyExpert;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 class JoinUsController extends Controller
 {
     public function showForm()
@@ -16,31 +17,39 @@ class JoinUsController extends Controller
 
     public function submitForm(Request $request)
     {
-        // $user = User::findOrFail($request->user_id);
         $validatedData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:join_us,email',
-            'phone' => 'required|string',
+            'phone' => 'required|regex:/^07\d{8}$/|string|unique:join_us,phone', // Regex pattern to validate '07' followed by 8 digits
             'image' => 'image|nullable',
-            'cv' => 'file|mimes:pdf|nullable', // Corrected validation rule for CV file
-            'description' => 'required', // Assuming description is still required
-            'location' => 'required', // Assuming location is still required
-            'years_of_experience' => 'required|integer', // Added validation for years_of_experience
-            'age' => 'required|integer', // Added validation for age
-            'price' => 'numeric', // Changed to numeric for price (no longer required)
+            'cv' => 'file|mimes:pdf|nullable',
+            'description' => 'required',
+            'location' => 'required',
+            'years_of_experience' => 'required|integer',
+            'age' => 'required|integer',
+            'price' => 'nullable|numeric',
             'service_id' => 'required',
-            'working_hours'=>'required',
-            'availability'=>'required',
+            'working_hours' => 'required',
+            'availability' => 'required',
+            'password' => 'required|min:8', // Minimum password length of 8 characters
         ]);
 
         $image = $request->file('image');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('img'), $imageName);
+        if ($image) {
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('img'), $imageName);
+        }
 
         $pdfFile = $request->file('cv');
-        $CV = time() . '.' . $pdfFile->getClientOriginalExtension();
-        $pdfFile->move(public_path('cv'), $CV);
+        if ($pdfFile) {
+            $CV = time() . '.' . $pdfFile->getClientOriginalExtension();
+            $pdfFile->move(public_path('cv'), $CV);
+        }
+
         $user = Auth::user();
+        // Encrypt the password before storing it
+        $hashedPassword = Hash::make($request->password);
+
         // Create a new Professional with the image filename
         JoinUs::create([
             'name' => $request->name,
@@ -49,22 +58,16 @@ class JoinUsController extends Controller
             'email' => $request->email,
             'location' => $request->location,
             'years_of_experience' => $request->years_of_experience,
-            'phone'=>$request->phone,
-
-            'cv' => $CV,
+            'phone' => $request->phone,
+            'cv' => $pdfFile ? $CV : null,
             'price' => $request->price,
-
             'working_hours' => $request->working_hours,
             'availability' => $request->availability,
             'age' => $request->age,
-            'password'=>$request->password,
-
+            'password' => $hashedPassword,
             'service_id' => $request->service_id,
         ]);
-
-
-
-
+        Alert::success('Success', 'Form submitted successfully')->persistent(true)->autoClose(3000);
 
         // Redirect to a thank you page or another suitable page
         return redirect()->route('join-us.show')->with('success', 'Form submitted successfully.');

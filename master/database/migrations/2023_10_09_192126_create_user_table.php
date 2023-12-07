@@ -18,10 +18,11 @@ return new class extends Migration
                 $table->mediumText('image')->nullable();
                 $table->string('name')->nullable();
                 $table->string('email')->unique();
-                $table->string('password');
+                $table->string('password')->nullable();
                 $table->string('address')->nullable();
                 $table->string('phone')->nullable();
                 $table->string('city')->nullable();
+                $table->string('google_id')->nullable();
                 $table->enum('user_type', ['customer', 'beautyexperts'])->defaultValue('customer');
                 $table->timestamps();
 

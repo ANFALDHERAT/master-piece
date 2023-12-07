@@ -664,7 +664,13 @@
 
         </div>
     </div>
+{{--
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
 
+    </div>
+@endif --}}
 
     @yield('content')
 
@@ -700,7 +706,7 @@
             <div class="col-lg-2 learts-mb-40">
                 <ul class="widget-list">
                     {{-- <li> <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/">Twitter</a></li> --}}
-                    <li> <i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/">Facebook</a></li>
+                    <li> <i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/anfal.dherat?mibextid=kFxxJD">Facebook</a></li>
                     <li> <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/">Instagram</a></li>
                     {{-- <li> <i class="fab fa-youtube"></i> <a href="https://www.youtube.com/">Youtube</a></li> --}}
                 </ul>
@@ -764,6 +770,8 @@
 <!-- Main Activation JS -->
 <script src="{{ URL::asset('assets1/js/main.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $('.product-quantity').on('click', '.minus', function () {
@@ -795,50 +803,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-
-
-
-
-<script>
-    // Function to update total amount in the PayPal form
-    function updatePayPalTotalAmount(totalPrice) {
-        document.getElementById('totalAmountInput').value = totalPrice;
-    }
-
-    // Apply coupon functionality
-    document.getElementById('applyCouponBtn').addEventListener('click', function () {
-        var couponCode = document.getElementById('couponCode').value;
-
-        fetch('{{ route('apply.coupon') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                coupon_code: couponCode
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.totalPrice !== undefined) {
-                // Update the displayed total price after applying the coupon
-                document.getElementById('totalPrice').textContent = data.totalPrice + 'jd';
-                document.getElementById('displayTotalPrice').textContent = data.totalPrice + 'jd';
-
-                // Update the total amount in the PayPal form
-                updatePayPalTotalAmount(data.totalPrice);
-
-                alert('Coupon applied successfully!');
-            } else {
-                alert('Invalid coupon code');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-</script>
 
 </body>
 </html>

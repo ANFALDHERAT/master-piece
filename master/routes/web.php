@@ -22,6 +22,7 @@ use App\Http\Controllers\LaserController;
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TimeSlotController;
+use App\Http\Controllers\GoogleAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,7 +92,7 @@ Route::get('/profilee/{id}', [adminController::class, 'profile'])->name('admin.p
 // Update profile
 Route::patch('/profilee/{id}', [adminController::class, 'updateProfile'])->name('admin.updateProfile');
 
-Route::post('/professionalUpdate',  [ProfileController::class, 'professionalUpdate'])->name('ProfessionalUpdate');
+
 
 
 
@@ -131,11 +132,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/professionalUpdate',  [ProfileController::class, 'professionalUpdate'])->name('ProfessionalUpdate');
+
 });
 
-
-
-
+Route::get('auth/google',[GoogleAuthController::class,'redirect'])->name('google-auth');
+Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle']);
 
 /// ////////////////for paypal payment gateway//////////////////////////
 Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');

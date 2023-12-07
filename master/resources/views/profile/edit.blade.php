@@ -1,98 +1,168 @@
+@extends('pageslayout.master')
+
+ @section('title','')
+
+ <style>
+   .container p {
+    color: black;
+  }
+
+  table{
+    color: black
+  }
+ </style>
+ @section('css')
+
+ @endsection
 
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
 
-    <head>
-      <title>Bootstrap Example</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
+ @section('content')
 
+ @if (Auth::user()->user_type == 'beautyexperts')
+  <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+      <div>
+          @include('profile.partials.update-Profession-information-form')
+      </div>
+  </div>
+  @else
 
-
-    <hr>
-    <div class="container bootstrap snippet">
-        <div class="row">
-
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="{{route('beauty-experts.indexbeauty')}}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav>
         </div>
-        <div class="row">
-              <div class="col-sm-3"><!--left col-->
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="{{ asset('assets1/images/Capture.PNG')}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3" style="color: black">{{$user->name}}</h5>
+              {{-- <x-text :value="old('name', $user->name)" required autofocus autocomplete="name" /> --}}
 
 
-                <div class="text-center">
-                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
-                    <h6>Upload a different photo...</h6>
+              {{-- <p class="text-muted mb-1">Full Stack Developer</p> --}}
+              {{-- <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> --}}
+              {{-- <div class="d-flex justify-content-center mb-2">
+                <button type="button" class="btn btn-primary">Follow</button>
+                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+              </div> --}}
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fa-solid fa-pen-to-square" style="color: #c97eed;"></i>
+                  <a class="mb-0" style="color: black" href="" id="update">Update your password</a>
 
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fa-solid fa-trash" style="color: #c97eed;"></i>
+                  <p class="mb-0">Delete Account</p>
+                </li>
+                {{-- <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                  <p class="mb-0">@mdbootstrap</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                  <p class="mb-0">mdbootstrap</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                  <p class="mb-0">mdbootstrap</p>
+                </li> --}}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
 
-                </div>
-
-                      <ul class="list-group">
-                        <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-                      </ul>
-
-
-
-                    </div><!--/col-3-->
-                    <div class="col-sm-9">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-
-                          </ul>
-
-
-                      <div class="tab-content">
-                        <div class="tab-pane active" id="home">
-                            <hr>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
+             <div class="max-w-xl" id="profile_info">
                     @include('profile.partials.update-profile-information-form')
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
+                <div class="max-w-xl" id="update_pass" style="display: none">
+                  @include('profile.partials.update-password-form')
+              </div>
+
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-12">
                 <div class="card-body">
-                    @include('profile.partials.update-password-form')
+                    <div class="table-responsive table-desi">
+                        <table class="table all-package table-category" id="editableTable">
+                            <thead>
+                                <tr>
+                                    <th>Service Name</th>
+                                    <th>Expert Name</th>
+                                    <th>working_hours</th>
+                                    <th>availability</th>
+                                    <th>price</th>
+                                    <th>quantity</th>
+                                    <th>User Name</th>
+                                    <th>User Email</th>
+
+
+
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($bookings as $item)
+                                <tr>
+                                    <td>{{ $item->name }}</td>
+
+                                    <td>{{ $item->nameExpert }}</td>
+                                    <td>{{ $item->working_hours }}</td>
+                                    <td>{{ $item->availability}}</td>
+                                    <td>{{ $item->price }}</td>
+                                    <td>{{ $item->quantity}}</td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>{{ $item->user->email }}</td>
+
+
+
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+          </div>
         </div>
+      </div>
     </div>
 
-    @if (Auth::user()->user_type == 'beautyexperts')
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div>
-                    @include('profile.partials.update-Profession-information-form')
-                </div>
-            </div>
-            @endif
+    @endif
 
-    {{-- <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
-    </div> --}}
+  @endsection
+
+
+{{--
+<div class="row mt-4">
+<div class="col-md-6">
+  <div class="card">
+      <div class="card-body">
+          @include('profile.partials.delete-user-form')
+      </div>
+  </div>
 </div>
 </div>
-
-</div><!--/tab-pane-->
-</div><!--/tab-content-->
-
-</div><!--/col-9-->
 </div>
+</div> --}}

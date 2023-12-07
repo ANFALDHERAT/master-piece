@@ -34,10 +34,10 @@
 
             <div class="col-lg-2 learts-mb-40">
                 <ul class="widget-list">
-                    <li> <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/">Twitter</a></li>
-                    <li> <i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/">Facebook</a></li>
+                    {{-- <li> <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/">Twitter</a></li> --}}
+                    <li> <i class="fab fa-facebook-f"></i> <a href="https://web.facebook.com/anfal.dherat">Facebook</a></li>
                     <li> <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/">Instagram</a></li>
-                    <li> <i class="fab fa-youtube"></i> <a href="https://www.youtube.com/">Youtube</a></li>
+                    {{-- <li> <i class="fab fa-youtube"></i> <a href="https://www.youtube.com/">Youtube</a></li> --}}
                 </ul>
             </div>
 

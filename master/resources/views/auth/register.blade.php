@@ -18,7 +18,7 @@
                 class="img-fluid" alt="Phone image">
             </div>
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                <h1 class="text-center" style="color:#F8796C ">AYSEL</h1>
+                {{-- <h1 class="text-center" style="color:#F8796C ">AYSEL</h1> --}}
         <!-- AYSEL Name -->
 
     <form method="POST" action="{{ route('register') }}">
@@ -66,12 +66,12 @@
             <x-text-input id="role" class="block mt-1 w-full" type="text" name="role" :value="old('role')" required />
         </div> --}}
 
-        <div class="d-flex justify-content-around align-items-left mb-4">
-            <a  class="form-check-label" href="{{ route('login') }}">
+        <div class="d-flex justify-content-around align-items-left mb-4" style="color:#F8796C ">
+            <a  class="form-check-label" href="{{ route('login') }}" style="color:#F8796C ">
                 {{ __('Already registered?') }}
             </a>
         </div>
-            <x-primary-button class="btn btn-primary btn-lg btn-block">
+            <x-primary-button class="btn  btn-lg btn-block" style="background-color:#F8796C ">
                 {{ __('Register') }}
             </x-primary-button>
         </div>

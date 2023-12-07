@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ContactUs;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class ContactUsController extends Controller
 {
     /**
@@ -32,8 +32,8 @@ class ContactUsController extends Controller
         ]);
 
         ContactUs::create($request->all());
-
+        Alert::success('Success', 'Thank you for contact us. we will contact you shortly.')->persistent(true)->autoClose(3000);
          return redirect()->back()
-                          ->with(['success' => 'Thank you for contact us. we will contact you shortly.']);
+                          ;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BeautyExpert;
+
 class TimeSlotController extends Controller
 {
     public function getTimeSlots($selectedDay)

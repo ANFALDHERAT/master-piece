@@ -10,6 +10,7 @@ use App\Models\Checkout;
 use App\Models\Coupon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Payment;
+use RealRashid\SweetAlert\Facades\Alert;
 class CheckoutController extends Controller
 {
 
@@ -37,12 +38,13 @@ class CheckoutController extends Controller
 
                 // Calculate the updated total price after applying the coupon
                 $updatedTotalPrice = $totalPrice - ($totalPrice * $discountAmount);
-
+                Alert::success('Coupon Applied!', 'Total Price Updated: ' . $updatedTotalPrice)->showConfirmButton('OK');
                 return response()->json(['totalPrice' => $updatedTotalPrice]);
             }
-
+            Alert::error('Error!', 'Booking not found for the user')->showConfirmButton('OK');
             return response()->json(['error' => 'Booking not found for the user'], 404);
         }
+        Alert::error('Error!', 'Invalid coupon code')->showConfirmButton('OK');
 
         return response()->json(['error' => 'Invalid coupon code'], 422);
     }

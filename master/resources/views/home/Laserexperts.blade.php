@@ -52,7 +52,7 @@
                                 <i class="fas fa-map-marker-alt" style="margin-bottom: 10px;color: #e66b5a;"></i> Location: {{ $expert->address }}
                             </p>
                             <div >
-                                <a href="{{ route('LaserDetails.index', ['id' => $expert->id]) }}" class="btn btn-dark btn-outline-hover-dark">More Detail</a>
+                                <a href="{{ route('LaserDetails.index', ['id' => $expert->id]) }}" class="btn btn-dark btn-outline-hover-dark" style="margin-top: 50px">More Detail</a>
                             </div>
 
 
